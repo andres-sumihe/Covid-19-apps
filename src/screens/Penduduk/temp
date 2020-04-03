@@ -1,0 +1,424 @@
+<View style={{flex:10}}>
+            {this.state.active == 1? <ScrollView style={{}} contentContainerStyle={{justifyContent: 'center',alignItems: 'center',}}>
+                <View style={{width:"90%"}}>
+                    <View style={{flex:1, justifyContent: 'center', marginBottom:5}}>
+                        <TextField
+                            // value={username}
+                            label='No. Kartu Tanda Penduduk'
+                            keyboardType='default'
+                            textColor='grey'
+                            baseColor='gray'
+                            selectionColor='grey'
+                            tintColor='#0288d1'
+                            lineWidth={2}
+                            contentInset={{label: 0, top:4, input:1}}
+                            // onChangeText={ (username) => this.setState({ username })} 
+                            />
+
+                        <View style={{position:"absolute", alignSelf: 'flex-end',flexDirection:'row', alignItems: 'center',}}>
+                            <Text style={{fontSize:16, color:'grey'}}>KTP Sementara</Text>
+                            <Switch />
+                        </View>
+                        
+                    </View>
+                </View>
+
+                <View style={{width:"90%"}}>
+                    <View style={{flex:1, justifyContent: 'center', marginBottom:5}}>
+                        <TextField
+                            // value={username}
+                            label='Nama Lengkap'
+                            keyboardType='default'
+                            textColor='grey'
+                            baseColor='gray'
+                            selectionColor='grey'
+                            tintColor='#0288d1'
+                            lineWidth={2}
+                            contentInset={{label: 0, top:4, input:1}}
+                            // onChangeText={ (username) => this.setState({ username })} 
+                            />
+                    </View>
+                </View>
+                
+                <View style={{width:"90%"}}>
+                    {/* Provinsi */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <TouchableOpacity onPress={()=>this.openModal('Pilih Provinsi')} style={{borderBottomWidth:1, borderColor:'grey', height:30}}>
+                                <Text style={{bottom:5,left:1, position: 'absolute', color:'grey', fontSize:16}}>Provinsi</Text>   
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    {/* KABUPATEN KOTA */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.kabKota}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ kabKota: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.kabKotaData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.kabKota} value={item.kabKota} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+
+                <View style={{width:"90%"}}>
+                    <View style={{flex:1, justifyContent: 'center', marginBottom:5}}>
+                        <TextField
+                            // value={username}
+                            label='Tanggal Lahir'
+                            keyboardType='numeric'
+                            textColor='grey'
+                            baseColor='gray'
+                            selectionColor='grey'
+                            tintColor='#0288d1'
+                            lineWidth={2}
+                            contentInset={{label: 0, top:4, input:1}}
+                            // onChangeText={ (username) => this.setState({ username })} 
+                            />
+                    </View>
+                </View>
+
+                <View style={{width:"90%"}}>
+                    <View style={{flex:1, alignItems: 'center', justifyContent:'space-between',flexDirection:'row', marginBottom:5}}>
+                        <View style={{width:'46%'}}>
+                            {/* Jenis Kelamin */}
+                            <View style={{width:"100%"}}>
+                                <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                                    <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                        <Picker
+                                            selectedValue={this.state.jenisKelamin}
+                                            onValueChange={(value, index) => {
+                                                this.setState({ jenisKelamin: value })
+                                            }}
+                                            style={{ height: 30, width: '100%',  color: 'black' }}
+                                        >
+                                            {this.state.jenisKelaminData.map((item, index) => {
+                                                return (
+                                                    <Picker.Item key={index} label={item.jenisKelamin} value={item.jenisKelamin} />
+                                                )
+                                            })}
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width:'46%'}}>
+                            {/* Golongan Darah */}
+                            <View style={{width:"100%"}}>
+                                <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                                    <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                        <Picker
+                                            selectedValue={this.state.golonganDarah}
+                                            onValueChange={(value, index) => {
+                                                this.setState({ golonganDarah: value })
+                                            }}
+                                            style={{ height: 30, width: '100%',  color: 'black' }}
+                                        >
+                                            {this.state.golonganDaraData.map((item, index) => {
+                                                return (
+                                                    <Picker.Item key={index} label={item.golDarah} value={item.golDarah} />
+                                                )
+                                            })}
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    
+                    <View style={{flex:1, alignItems: 'center', justifyContent:'space-between',flexDirection:'row', marginBottom:5}}>
+                        <View style={{width:'46%'}}>
+                            {/* Agama */}
+                            <View style={{width:"100%"}}>
+                                <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                                    <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                        <Picker
+                                            selectedValue={this.state.agama}
+                                            onValueChange={(value, index) => {
+                                                this.setState({ agama: value })
+                                            }}
+                                            style={{ height: 30, width: '100%',  color: 'black' }}
+                                        >
+                                            {this.state.agamaData.map((item, index) => {
+                                                return (
+                                                    <Picker.Item key={index} label={item.agama} value={item.agama} />
+                                                )
+                                            })}
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width:'46%'}}>
+                            {/* Status */}
+                            <View style={{width:"100%"}}>
+                                <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                                    <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                        <Picker
+                                            selectedValue={this.state.Status}
+                                            onValueChange={(value, index) => {
+                                                this.setState({ Status: value })
+                                            }}
+                                            style={{ height: 30, width: '100%',  color: 'black' }}
+                                        >
+                                            {this.state.statusData.map((item, index) => {
+                                                return (
+                                                    <Picker.Item key={index} label={item.status} value={item.status} />
+                                                )
+                                            })}
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    
+                    
+                    
+                    {/* PEKERJAAN */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.pekerjaan}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ pekerjaan: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.pekerjaanData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.pekerjaan} value={item.pekerjaan} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+
+
+                    <TouchableOpacity style={{height:50, width:'100%', backgroundColor:'#d7d7d7', justifyContent: 'center', alignItems: 'center', marginBottom:10}}>
+                        <Text style={{color:'#0288d1'}}>Ambil Foto</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{height:50, width:'100%', backgroundColor:'orange', justifyContent: 'center', alignItems: 'center', marginBottom:20}}>
+                        <Text style={{color:'white'}}>Upload Foto KTP</Text>
+                    </TouchableOpacity>
+                    
+                </View>
+
+            </ScrollView>:null}
+
+            {this.state.active == 2?
+            
+            <ScrollView contentContainerStyle={{justifyContent: 'center',alignItems: 'center',}}>
+                <View style={{width:"90%"}}>
+                    {/* Provinsi */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.provinsi}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ provinsi: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.provinsiData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.provinsi} value={item.provinsi} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+                    {/* KABUPATEN KOTA */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.kabKota}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ kabKota: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.kabKotaData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.kabKota} value={item.kabKota} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+                    {/* KECAMATAN */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.kecamatan}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ kecamatan: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.kecamatanData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.kecamatan} value={item.kecamatan} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+                    {/* DESA KELURAHAN */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.desa}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ desa: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.desaData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.desa} value={item.desa} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+                    {/* KODE POS */}
+                    <View style={{width:"100%"}}>
+                        <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
+                            <View style={{borderBottomWidth:2, borderColor:'grey'}}>
+                                <Picker
+                                    selectedValue={this.state.kodepos}
+                                    onValueChange={(value, index) => {
+                                        this.setState({ kodepos: value })
+                                    }}
+                                    style={{ height: 30, width: '100%',  color: 'black' }}
+                                >
+                                    {this.state.kodeposData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.kodePos} value={item.kodePos} />
+                                        )
+                                    })}
+                                </Picker>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{flex:1, alignItems: 'center', justifyContent:'space-between',flexDirection:'row', marginBottom:5}}>
+                        <View style={{width:'46%'}}>
+                            <TextField
+                                // value={username}
+                                label='RT'
+                                keyboardType='default'
+                                textColor='grey'
+                                baseColor='gray'
+                                selectionColor='grey'
+                                tintColor='#0288d1'
+                                lineWidth={2}
+                                contentInset={{label: 0, top:4, input:1}}
+                                // onChangeText={ (username) => this.setState({ username })} 
+                                />
+                        </View>
+                        <View style={{width:'46%'}}>
+                            <TextField
+                                // value={username}
+                                label='RW'
+                                keyboardType='default'
+                                textColor='grey'
+                                baseColor='gray'
+                                selectionColor='grey'
+                                tintColor='#0288d1'
+                                lineWidth={2}
+                                contentInset={{label: 0, top:4, input:1}}
+                                // onChangeText={ (username) => this.setState({ username })} 
+                                />
+                        </View>
+                    </View>
+                </View>
+                <View style={{width:"90%"}}>
+                    <View style={{flex:1, justifyContent: 'center', marginBottom:5}}>
+                        <TextField
+                            // value={username}
+                            label='Alamat Lengkap'
+                            keyboardType='default'
+                            textColor='grey'
+                            baseColor='gray'
+                            selectionColor='grey'
+                            tintColor='#0288d1'
+                            lineWidth={2}
+                            multiline={true}
+                            contentInset={{label: 0, top:4, input:1}}
+                            // onChangeText={ (username) => this.setState({ username })} 
+                            />
+                    </View>
+                </View>
+            </ScrollView>:null}
+            
+            </View>
+
+             <View style={{flex:1}}>
+                <View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems:'center'}}> 
+                    <TouchableOpacity onPress={()=> this.setState({active:1})}  activeOpacity={1}
+                    style={[{flex:1,justifyContent:'center', alignItems:'center',height:40, borderRightWidth:1},
+                        {borderBottomWidth:2, borderBottomColor:this.state.active == 1 ? '#0288d1':'grey'}]}>
+                        <Text style={{fontSize:18,color:this.state.active == 1 ? '#0288d1' : 'black'}}>Biodata</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=> this.setState({active:2})} activeOpacity={1}
+                    style={[{flex:1,justifyContent:'center', alignItems:'center',height:40, borderRightLeft:1},
+                        {borderBottomWidth:2, borderBottomColor:this.state.active == 2 ? '#0288d1':'grey'}]}>
+                    <Text style={{ fontSize:18,color:this.state.active == 2 ? '#0288d1' : 'black'}}>Alamat</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{ height: hp('1%') }}>
+            <LinearGradient
+                colors={['rgba(0,0,0,0.1)', 'transparent']}
+                style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                height: hp('1%'),
+                }}
+            />
+            </View>
+        
+            
+            <View style={{ height: hp('1%'), backgroundColor:'transparent' }}>
+                <LinearGradient
+                    colors={['transparent', 'rgba(0,0,0,0.4)']}
+                    style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: hp('1%'),
+                    }}
+                />
+            </View>
+            <View style={{flex:2,width:'100%', alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{width:'50%',}}>
+                    {this.state.showHeader?<Button title="Simpan" color="#0288d1" />:null}
+                </View>
+            </View>
