@@ -11,6 +11,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
 import Qrcode from '../components/Qrcode'
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, GooglePlacesAutocomplete } from 'react-native-maps';
+// @ts-ignore
+// import GetLocation from 'react-native-get-location';
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 import Logo from '../../assets/Covid-19.svg'
 import Call from '../../assets/telkom.svg'
@@ -20,8 +25,20 @@ import { widthPercentageToDP as wp, heightPercentageToDP}  from 'react-native-re
 import { normalize } from '../components/ResponsiveFontSize';
 
 export default class Main extends Component {
+
+    state = {
+        location: null,
+        errorMessage: null
+    }
   constructor(props) {
     super(props);
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
     this.state = {
         keyboardAvoidingViewOffset: 0,
         open:false,
@@ -32,8 +49,8 @@ export default class Main extends Component {
         phoneNumber: '911',
         mode: 'user',
         setLocation: false,
-        markLat: -6.995522,
-        markLong: 110.435393,
+        markLat: null,
+        markLong: null,
         mapRegion: '',
         data: [
             {
@@ -60,6 +77,19 @@ export default class Main extends Component {
         ]
     };
   }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
+  };
+
   modal = React.createRef();
   modal2 = React.createRef();
   renderQR = () => {
@@ -179,6 +209,17 @@ export default class Main extends Component {
     });
     }
 
+    handleMapOpen =()=>{
+        // console.log(this.state.location.coords.latitude)
+        const lat = this.state.location.coords.latitude
+        const long = this.state.location.coords.longitude
+        this.setState({
+            markLat: lat,
+            markLong: long,
+            setLocation: true
+        })
+    }
+
     showMap = () => {
         return(
             <View style={{zIndex: 99, position: 'absolute'}}>
@@ -200,7 +241,8 @@ export default class Main extends Component {
                 >
                     
                     <Marker
-                        title={'Event Location'}
+                        title={'Lokasi Anda'}
+                        // onPress={this.setState}
                         coordinate={{latitude: this.state.markLat, longitude: this.state.markLong}}
                         // draggable
                         // onDragEnd={(e) => this.onMarkerDragEnd(e.nativeEvent.coordinate)}
@@ -239,23 +281,7 @@ export default class Main extends Component {
   };
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            var lat = parseFloat(position.coords.latitude)
-            var long = parseFloat(position.coords.longitude)
-      
-            var initialRegion = {
-              latitude: lat,
-              longitude: long,
-              latitudeDelta: LATITUDE_DELTA,
-              longitudeDelta: LONGITUDE_DELTA,
-            }
-      
-            this.setState({markLat: lat, markLong: long})
-
-        },
-          (error) => alert(JSON.stringify(error)),
-          {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
-      
+        
         this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide': 'keyboardWillHide', this.keyboardHideListener.bind(this));
         this.keyboardShowListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidShow': 'keyboardWillShow', this.keyboardShowListener.bind(this));
     }
@@ -275,6 +301,14 @@ export default class Main extends Component {
     }
   render() {
     let { keyboardAvoidingViewOffset } = this.state
+    let text = 'Waiting..';
+    if (this.state.errorMessage) {
+      text = this.state.errorMessage;
+    } else if (this.state.location) {
+    //   text = JSON.stringify(this.state.location);
+      text = this.state.location.coords.latitude
+      console.log(text)
+    }
     return (
       <View style={styles.container}>
         <View style={styles.backgroundTop}>
@@ -405,7 +439,7 @@ export default class Main extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <TouchableOpacity onPress={()=>this.setState({setLocation: true})} style={{marginTop:20,backgroundColor: '#0288d1',justifyContent: 'center',alignItems: 'center', paddingVertical:10, width:wp('80')}}>
+                <TouchableOpacity onPress={()=>this.handleMapOpen()} style={{marginTop:20,backgroundColor: '#0288d1',justifyContent: 'center',alignItems: 'center', paddingVertical:10, width:wp('80')}}>
                     <Text style={{color:'white'}}>Lihat Fasilitas Kesehatan Terdekat</Text>
                 </TouchableOpacity>
 

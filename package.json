@@ -1,5 +1,6 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "node_modules/expo/AppEntry",
+  "typings": "node_modules/expo/AppEntry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,11 +10,13 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.2.3",
+    "@react-native-community/netinfo": "^5.7.0",
     "expo": "~36.0.0",
     "expo-barcode-scanner": "^8.0.0",
     "expo-camera": "^8.0.0",
     "expo-font": "~8.0.0",
     "expo-image-picker": "^8.0.2",
+    "expo-location": "~8.0.0",
     "expo-svg-uri": "^1.1.0",
     "jwt-decode": "^2.2.0",
     "metro-config": "^0.58.0",
@@ -26,6 +29,7 @@
     "react-native-dash": "^0.0.11",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "~1.5.0",
+    "react-native-get-location": "^1.4.2",
     "react-native-image-picker": "^2.3.1",
     "react-native-indicators": "^0.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
