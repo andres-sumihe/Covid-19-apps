@@ -104,92 +104,44 @@ export default class Main extends Component {
   }
   renderContent = () => {
     return (
-        <View style={[styles.content, {height: 300}]}>
-          <View style={{
-              paddingHorizontal:30, 
-              paddingVertical:5, 
-              borderBottomRightRadius:5,
-              justifyContent: 'center', 
-              alignItems: 'center',
-              backgroundColor:'#d5322e',
-              position: "absolute",
-              top:0,
-              left:0,
-              zIndex:100
-              }}>
-            <Text style={{color: "white"}}>Ganti Password</Text>
-          </View>
-          <View style={styles.containerChangePassword}>
-                <View style={styles.rowView}>
-                    <Entypo name='key' size={16} color='#b5b5b5' style={{ position: 'absolute', top: 12, left: -20 }} />
-                    <TextField
-                        label='Password Lama'
-                        textColor='grey'
-                        baseColor='black'
-                        selectionColor='#d5322e'
-                        tintColor='#d5322e'
-                        lineWidth={1}
-                        activeLineWidth={1}
-                        contentInset={{ label: -2, top: 1, input: 1 }}
-                        secureTextEntry={true}
-                        fontSize={12}
-
-                        />
+        <View style={{height:hp('16%'), width:wp('100%'), backgroundColor:'white'}}>
+            <TouchableOpacity 
+                    onPress={()=>this.props.navigation.navigate("TambahPenduduk",{action: "Edit"})}
+                    style={{
+                    backgroundColor:'white',
+                    width: "100%", 
+                    justifyContent: 'flex-start',
+                    paddingLeft:20,
+                    height:hp('8%'), 
+                    alignItems: 'center', 
+                    paddingVertical:5,
+                    flexDirection:'row' 
+                        }}>
+                <View style={{width:'12%'}}>
+                    <FontAwesome color='grey' name="id-card" style={{}} size={20} />
                 </View>
-
-
-                <View style={styles.rowView}>
-                    <EvilIcons name='lock' size={24} color='#b5b5b5' style={{ position: 'absolute', top: 10, left: -25 }} />
-                    <TextField
-                        label='Password Baru'
-                        textColor='grey'
-                        baseColor='black'
-                        selectionColor='#d5322e'
-                        tintColor='#d5322e'
-                        lineWidth={1}
-                        activeLineWidth={1}
-                        contentInset={{ label: -2, top: 1, input: 1 }}
-                        secureTextEntry={true}
-                        fontSize={12}
-
-                    />
+                <View style={{width:'80%'}}>
+                    <Text style={{ paddingLeft: 5, color: 'grey', textAlign: 'left', }}>  Biodata</Text>
                 </View>
-                <View style={styles.rowView}>
-                    <EvilIcons name='lock' size={24} color='#b5b5b5' style={{ position: 'absolute', top: 10, left: -25 }} />
-                    <TextField
-                        label='Konfirmasi Password'
-                        textColor='grey'
-                        baseColor='black'
-                        selectionColor='#d5322e'
-                        tintColor='#d5322e'
-                        lineWidth={1}
-                        activeLineWidth={1}
-                        contentInset={{ label: -2, top: 1, input: 1 }}
-                        secureTextEntry={true}
-                        fontSize={12}
-
-                        />
+            </TouchableOpacity>
+            <TouchableOpacity 
+                    onPress={()=>this.props.navigation.navigate("Login")}
+                    style={{ 
+                    width: "100%", 
+                    justifyContent: 'flex-start',
+                    paddingLeft:20,
+                    height:hp('8%'), 
+                    alignItems: 'center', 
+                    paddingVertical:5,
+                    flexDirection:'row' 
+                        }}>
+                <View style={{width:'12%'}}>
+                    <AntDesign color='grey' name="logout" style={{}} size={20} />
                 </View>
-                <TouchableOpacity 
-                        onPress={()=>this.props.navigation.navigate("Login")}
-                        style={{ backgroundColor: "#0288d1", 
-                        width: "100%", 
-                        justifyContent: 'center', 
-                        alignItems: 'center', 
-                                alignItems: 'center', 
-                                marginTop:20,
-                                marginBottom:20,
-                                paddingVertical:5,
-                                flexDirection:'row' 
-                            }}>
-                    <AntDesign color='white' name="logout" style={{}} size={24} />
-                    <Text style={{ paddingLeft: 5, color: 'white', textAlign: 'center', }}>Logout</Text>
-                </TouchableOpacity>
-
-            </View>
-                <View style={{width: '113%', backgroundColor: '#d5322e', position: "absolute", bottom:0, height:40, justifyContent: 'center', alignItems: 'center', }}>
-                    <Text style={{color:'white', fontWeight:'700', fontSize:normalize(15)}}>Simpan</Text>
+                <View style={{width:'80%'}}>
+                    <Text style={{ paddingLeft: 5, color: 'grey', textAlign: 'left', }}>Logout</Text>
                 </View>
+            </TouchableOpacity>
         </View>
     );
   };

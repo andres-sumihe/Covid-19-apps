@@ -70,6 +70,8 @@ export default class Login extends React.Component{
                                 baseColor='white'
                                 selectionColor='white'
                                 tintColor='white'
+                                activeLineWidth={1}
+                                lineWidth={1}
                                 // containerStyle={{paddingLeft:10}}
                                 inputContainerStyle={{paddingLeft:25}}
                                 contentInset={{label: -2, top:1, input:1}}
@@ -87,6 +89,8 @@ export default class Login extends React.Component{
                                 baseColor='white'
                                 selectionColor='white'
                                 tintColor='white'
+                                activeLineWidth={1}
+                                lineWidth={1}
                                 inputContainerStyle={{paddingLeft:25}}
                                 contentInset={{label: -2, top:1, input:1}}
                                 onChangeText={ (password) => this.setState({ password }) }/>
