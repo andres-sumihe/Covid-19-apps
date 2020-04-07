@@ -1,5 +1,6 @@
 {
   "expo": {
+    "primaryColor": "#d5322e",
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": [
@@ -37,7 +38,10 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.adminduk"
+      "package": "com.adminduk",
+      "config": {
+        "googleMaps": "TARUH_API_DISINI"
+      }
     }
   }
 }
