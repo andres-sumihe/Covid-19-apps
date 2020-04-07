@@ -292,7 +292,7 @@ export default class AnggotaKeluarga extends Component {
               height: hp('1%'),
             }} />
         </View>
-        <ScrollView contentContainerStyle={{flex:7, alignItems: 'center',}}>
+        <ScrollView contentContainerStyle={{flex:7, alignItems: 'center'}}>
           <View style={{paddingHorizontal:20,paddingVertical:10, backgroundColor:'grey', width:'100%' }}>
             <Text style={{color: 'white'}}>Gejala Yang Dirasakan</Text>
           </View>
@@ -362,7 +362,7 @@ export default class AnggotaKeluarga extends Component {
               })}
         </ScrollView>
         {this.state.show?
-          <View style={{zIndex:-10000, width:"100%",height:40, justifyContent:'center', alignItems: 'center',position: 'absolute',bottom:0, backgroundColor:'#d5322e'}}>
+          <View style={{position: 'absolute',bottom:0, width:"100%",height:40, justifyContent:'center', alignItems: 'center',position: 'absolute',bottom:0, backgroundColor:'#d5322e'}}>
             <TouchableOpacity >
                 <Text style={{fontSize: normalize(13), fontWeight: "700", color:'white' }}>Simpan</Text>
             </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, ImageBackground} from 'react-native';
+import {View, Text, TouchableOpacity, Image, ImageBackground, Alert} from 'react-native';
 import {TextField} from 'react-native-material-textfield';
 import {Button, ThemeProvider} from 'react-native-elements';
 import {LinearGradient} from 'expo-linear-gradient'
@@ -23,12 +23,29 @@ export default class Login extends React.Component{
         }
     }
 
+    handleLogin = ()=>{
+        if(this.state.username === 'admin' && this.state.password === 'admin'){
+            this.props.navigation.navigate("Main", {privilages: "admin"})
+        }else if(this.state.username === 'user' && this.state.password === 'user'){
+            this.props.navigation.navigate("Main", {privilages: "user"})
+        }else {
+            Alert.alert(
+                'Login Gagal',
+                'Nomor KTP atau Nomor KK salah',
+                [
+                  {text: 'Oke', onPress: () => console.log('Cancel Pressed'), style: 'default'},
+                  
+                ],
+                { cancelable: false }
+            )
+        }
+    }
     render(){
         let {username, password} = this.state;
         return(
             <View style={{flex:1}}>
                 <LinearGradient
-                    colors={['#0288d1','#01579b']}
+                    colors={['#d5322e','#c21704']}
                     style={{
                         position: 'absolute',
                         left: 0,
@@ -47,7 +64,7 @@ export default class Login extends React.Component{
                             </View>
                             <TextField
                                 value={username}
-                                label='Username'
+                                label='Nomor KTP'
                                 keyboardType='default'
                                 textColor='white'
                                 baseColor='white'
@@ -64,7 +81,7 @@ export default class Login extends React.Component{
                             </View>
                             <TextField
                                 value={password}
-                                label='Password'
+                                label='Nomor KK'
                                 keyboardType='default'
                                 textColor='white'
                                 baseColor='white'
@@ -73,22 +90,15 @@ export default class Login extends React.Component{
                                 inputContainerStyle={{paddingLeft:25}}
                                 contentInset={{label: -2, top:1, input:1}}
                                 onChangeText={ (password) => this.setState({ password }) }/>
-                                <TouchableOpacity style={{position:'absolute', bottom:15, right:0}}>
-                                    <Entypo name="eye" size={15} color="white" />
-                                </TouchableOpacity>
-                        </View>
-
-                        <View style={{marginVertical:10, alignItems:'flex-end'}}>
-                            <Text style={{color:'white', fontWeight:'600'}} onPress={()=>this.props.navigation.navigate("LupaPassword")}>Lupa Password ?</Text>
                         </View>
                     </View>
-                    <View style={{width:'75%', marginBottom:0}}>
+                    <View style={{width:'75%', marginTop:10}}>
                         <ThemeProvider theme={theme}>
                             <Button 
                                 title="Masuk"
                                 buttonStyle={{borderRadius:5}}
                                 raised={true}
-                                onPress={()=>this.props.navigation.navigate("Main")}
+                                onPress={this.handleLogin}
                                 >
                             </Button>
                         </ThemeProvider>

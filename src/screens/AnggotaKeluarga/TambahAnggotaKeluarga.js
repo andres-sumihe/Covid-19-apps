@@ -27,9 +27,11 @@ export default class TambahAnggotaKeluarga extends Component {
       posisiWillDeleted:'',
       imageWillDeleted:null,
       selectedPosition:'Kepala Keluarga',
+      positif: true,
       conirm:false,
       showButton:false,
       title:'',
+      mode:'',
       monitoringType:'',
       data: [
         {
@@ -118,7 +120,7 @@ export default class TambahAnggotaKeluarga extends Component {
   }
 
   componentDidMount(){
-    this.setState({title: this.props.navigation.getParam("title")})
+    this.setState({title: this.props.navigation.getParam("title"),mode: this.props.navigation.getParam("privilages")})
     if(this.props.navigation.getParam("title") == "Daftar Warga"){
       this.setState({showButton: true})
     }else{
@@ -169,21 +171,34 @@ export default class TambahAnggotaKeluarga extends Component {
               paddingVertical:7,
               borderRadius:5, 
               paddingHorizontal:20, 
-              backgroundColor:'#ff9800', 
+              backgroundColor:'#0288d1', 
               width:wp('38%'),
               height:wp('38%')}}>
             <Text style={{color: 'white', fontWeight:'700',fontSize: normalize(20)}}>Masuk</Text>
             <Text style={{color: 'white', fontWeight:'700',fontSize: normalize(20)}}>Desa</Text>
           </TouchableOpacity>
         </View>
+            
             <TouchableOpacity 
-              onPress={this.closeModal}
+              onPress={this.handlePositifButton}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
                 paddingVertical:7,
                 borderRadius:5, 
-                marginTop:20,
+                marginTop:10,
+                backgroundColor:'#ff9800', 
+                width:wp('80%')}}>
+              <Text style={{color: 'white', fontSize: normalize(14)}}>Pasien Dalam Pengawasan</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={this.handlePositifButton}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical:7,
+                borderRadius:5, 
+                marginTop:10,
                 backgroundColor:'#d5322e', 
                 width:wp('80%')}}>
               <Text style={{color: 'white', fontSize: normalize(14)}}>Positif Virus Corona</Text>
@@ -279,7 +294,7 @@ export default class TambahAnggotaKeluarga extends Component {
 
         <View style={{justifyContent: 'center',alignItems: 'center',height:80}}>
           <TouchableOpacity 
-            onPress={this.closeModal}
+            onPress={this.handleInOutButton}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -304,8 +319,13 @@ export default class TambahAnggotaKeluarga extends Component {
       this.modal.current.open();
     }
   };
-  closeModal = () => {
-    this.setState({confirm:true})
+  handlePositifButton = () => {
+    this.setState({confirm: true})
+  }
+  handleInOutButton = () => {
+    this.props.navigation.navigate("AnggotaKeluarga")
+  }
+  closeModal = (e) => {
     if (this.modal.current) {
       this.modal.current.close();
     }
@@ -377,7 +397,7 @@ export default class TambahAnggotaKeluarga extends Component {
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Entypo name='chevron-left' color='#d5322e' size={24} style={{ paddingLeft: 10 }} />
           </TouchableOpacity>
-          <Text style={{ paddingLeft: 10, fontSize: normalize(15), color: "#d5322e", fontWeight: '500' }}>{this.state.title} / {this.state.monitoringType}</Text>
+          <Text style={{ paddingLeft: 10, fontSize: normalize(15), color: "#d5322e", fontWeight: '500' }}>{this.state.title}</Text>
         </View>
        
         <View style={{flex:9}}>
@@ -396,7 +416,7 @@ export default class TambahAnggotaKeluarga extends Component {
             </View>
           <ScrollView style={{marginBottom:80}}>
             {this.state.data.map((item, index) => {
-              return <SwipeRow 
+              return this.state.mode === 'admin' ?<SwipeRow 
                   ref={(c) => { this.rows[item.id] = c }}
                   onRowPress={this.openModal2}
                   onRowDidOpen={()=> this.setState({activeRow: item.id})}
@@ -419,6 +439,7 @@ export default class TambahAnggotaKeluarga extends Component {
                 </View>
                     <TambahCard uri={item.uri}  name={item.name} noKK={item.noKK} />
               </SwipeRow>
+              :<TambahCard uri={item.uri}  name={item.name} noKK={item.noKK} />
             })
             }
 

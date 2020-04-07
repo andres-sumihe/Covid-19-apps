@@ -35,6 +35,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.adminduk"
     }
   }
 }

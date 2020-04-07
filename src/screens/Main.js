@@ -1,6 +1,6 @@
 import React, { Component, useRef } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, ScrollView, Keyboard, KeyboardAvoidingView, Platform , Dimensions} from 'react-native';
-import {FontAwesome, MaterialCommunityIcons, AntDesign, Entypo, EvilIcons, Ionicons} from '@expo/vector-icons'
+import {Alert, View, Text, StyleSheet, StatusBar, TouchableOpacity, ScrollView, Keyboard, BackHandler, Platform , Dimensions} from 'react-native';
+import {FontAwesome,FontAwesome5, MaterialCommunityIcons, AntDesign, Entypo, EvilIcons, Ionicons, Feather} from '@expo/vector-icons'
 import {TextField} from 'react-native-material-textfield'
 import KTP from '../components/KTP';
 import KK from '../components/KK';
@@ -16,30 +16,27 @@ import MapView, { PROVIDER_GOOGLE, Marker, Callout, GooglePlacesAutocomplete } f
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import dataRS from '../../RS_RUJUKAN.json'
 
 import Logo from '../../assets/Covid-19.svg'
 import Call from '../../assets/telkom.svg'
 import {Linking} from 'react-native'
 
-import { widthPercentageToDP as wp, heightPercentageToDP}  from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp}  from 'react-native-responsive-screen';
 import { normalize } from '../components/ResponsiveFontSize';
 
 export default class Main extends Component {
-
-    state = {
-        location: null,
-        errorMessage: null
-    }
   constructor(props) {
     super(props);
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
+    this.handleBackButtonClick= this.handleBackButtonClick.bind(this)
     this.state = {
+        detailHospitals: false,
+        namaRSUD: '',
+        phoneRSUD: '',
+        alamatRSUD:'',
+        posisiSekarang: true,
+        location: null,
+        errorMessage: null,
         keyboardAvoidingViewOffset: 0,
         open:false,
         hide: true,
@@ -77,7 +74,11 @@ export default class Main extends Component {
         ]
     };
   }
-
+  handleBackButtonClick = () => {
+    this.setState({setLocation: false})
+    BackHandler.removeEventListener('hardwareBackPress',this.handleBackButtonClick);
+    return true
+  }
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -103,8 +104,6 @@ export default class Main extends Component {
   }
   renderContent = () => {
     return (
-      
-
         <View style={[styles.content, {height: 300}]}>
           <View style={{
               paddingHorizontal:30, 
@@ -204,52 +203,106 @@ export default class Main extends Component {
     onRegionChange(region, latitude, longitude) {
         this.setState({
         mapRegion: region,
-        markLat: latitude || this.state.markLat,
-        markLong: longitude || this.state.markLong
+        markLat: latitude,  
+        markLong: longitude
     });
     }
 
     handleMapOpen =()=>{
         // console.log(this.state.location.coords.latitude)
-        const lat = this.state.location.coords.latitude
-        const long = this.state.location.coords.longitude
-        this.setState({
-            markLat: lat,
-            markLong: long,
-            setLocation: true
-        })
+        if(this.state.location === null){
+            Alert.alert(
+                'GPS / Lokasi tidak ditemukan',
+                'untuk mengatasi masalah ini, silahkan nyalakan GPS dan coba lagi, atau lanjut tanpa GPS',
+                [
+                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                  {text: 'Lanjut', onPress: () => {
+                        this.setState({
+                            posisiSekarang: false,
+                            setLocation: true
+                        })
+                  }},
+                ],
+                { cancelable: false }
+            )
+        } else {
+            const lat = this.state.location.coords.latitude
+            const long = this.state.location.coords.longitude
+            this.setState({
+                markLat: lat,
+                markLong: long,
+                setLocation: true,
+                positionSekarang: true,
+            })
+        }
     }
-
+    Confirm = () => {
+        return(
+          <View style={styles.popupContainer}>
+            <View style={styles.infoContainer}>
+                <FontAwesome5 name="hospital" size={50} />
+                <Text style={{fontWeight:'700', fontSize: normalize(20),textAlign: 'center',marginBottom:5}}>{this.state.namaRSUD}</Text>
+                <TouchableOpacity 
+                        onPress={()=>{Linking.openURL(`${this.state.phoneRSUD}`)}}
+                        style={{flexDirection: "row", justifyContent: 'center',alignItems:'center',borderWidth:1, borderRadius:5, overflow: 'hidden',}}>
+                    <View style={{justifyContent: 'center',alignItems: 'center', padding:3, backgroundColor:'#ccc', width:40}}>
+                        <Feather name="phone-call" size={18} />
+                    </View>
+                    <Text style={{fontSize: normalize(15),textAlign: 'center', paddingHorizontal:5}}>{this.state.phoneRSUD != ''?this.state.phoneRSUD.slice(4):'02213212'}</Text>
+                </TouchableOpacity>
+                <Text style={{fontSize: normalize(15), textAlign: 'center',marginVertical:5}}>{this.state.alamatRSUD}</Text>
+              </View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.batalButton} onPress={()=> this.setState({detailHospitals: false})}>
+                      <Text>Batal</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.hapusButton} onPress={()=>Linking.openURL(`https://www.google.com/maps/dir//${this.state.namaRSUD}`)}>
+                      <Text style={{color:'white'}}>Petujuk Arah</Text>
+                </TouchableOpacity>
+            </View>
+          </View>
+        )}
+   
     showMap = () => {
         return(
             <View style={{zIndex: 99, position: 'absolute'}}>
-                
-                <Ionicons name='ios-arrow-back' size={35} style={{color: 'red', position: 'absolute', zIndex: 999, top : 25, left: 10, backgroundColor: '#fbfb', paddingVertical: 2, paddingHorizontal: 15, borderRadius: 5, }} onPress={()=> this.setState({setLocation:false})}/>
-                
+                <StatusBar hidden />
+                {/* <Ionicons name='ios-arrow-back' size={35} style={{color: 'red', position: 'absolute', zIndex: 999, top : 25, left: 10, backgroundColor: '#fbfb', paddingVertical: 2, paddingHorizontal: 15, borderRadius: 5, }} onPress={()=> this.setState({setLocation:false})}/> */}
+                {this.state.detailHospitals ? this.Confirm(): null}
                 <MapView  
                     provider={PROVIDER_GOOGLE}
                     style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height,}}
+                    onRegionChange={ (region, latitude, longitude) => this.onRegionChange(region, latitude, longitude)}
                     region={{
                         latitude: this.state.markLat,
                         longitude: this.state.markLong,
                         latitudeDelta: 0.0621,
                         longitudeDelta: 0.0521,
-                        // markLat: -6.995522,
-                        // markLong: 110.435393,
-                    }}
-                    // onPress={(e) => this.onMarkerDragEnd(e.nativeEvent.coordinate)}
-                >
-                    
-                    <Marker
+                    }}>
+                    {dataRS.map((item, i)=>(
+                        <MapView.Marker
+                            key={i}
+                            title={item.namaRSUD}
+                            onPress={()=> this.handleOpenDetail(item.namaRSUD, item.telephone, item.alamatRSUD)}
+                        
+                            coordinate={item.petunjukArahRSUD}
+                                // {/* {console.log(item.namaRSUD + ": "+parseFloat(item.petunjukArahRSUD.latitude)+" || "+parseFloat(item.petunjukArahRSUD.longitude))}  */}
+                        >
+                            <FontAwesome5 name="hospital" size={34} color="#d5322e" />
+                        </MapView.Marker>
+                    ))}
+                    {this.state.posisiSekarang?<MapView.Marker
                         title={'Lokasi Anda'}
+                        pinColor={'#0288d1'}
                         // onPress={this.setState}
                         coordinate={{latitude: this.state.markLat, longitude: this.state.markLong}}
                         // draggable
                         // onDragEnd={(e) => this.onMarkerDragEnd(e.nativeEvent.coordinate)}
                     >
-                        
-                    </Marker>
+                    
+                    </MapView.Marker> :null}   
                 </MapView>
+
             </View>
         )
     }
@@ -280,12 +333,27 @@ export default class Main extends Component {
     }
   };
 
+
+  handleOpenDetail = (nama, phone, alamat)=> {
+      this.setState({detailHospitals:true, namaRSUD: nama, phoneRSUD: phone, alamatRSUD: alamat})
+  }
+
     componentDidMount() {
+        this.setState({mode: this.props.navigation.getParam("privilages")})
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
         
         this.keyboardHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide': 'keyboardWillHide', this.keyboardHideListener.bind(this));
         this.keyboardShowListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidShow': 'keyboardWillShow', this.keyboardShowListener.bind(this));
+        if (Platform.OS === 'android' && !Constants.isDevice) {
+            this.setState({
+              errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+            });
+          } else {
+            this._getLocationAsync();
+          }
     }
     componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
         this.keyboardHideListener.remove()
         this.setState({keyboardAvoidingViewOffset: 0})
     }
@@ -299,7 +367,7 @@ export default class Main extends Component {
             keyboardAvoidingViewOffset: 0
         });
     }
-  render() {
+  render() { 
     let { keyboardAvoidingViewOffset } = this.state
     let text = 'Waiting..';
     if (this.state.errorMessage) {
@@ -307,8 +375,9 @@ export default class Main extends Component {
     } else if (this.state.location) {
     //   text = JSON.stringify(this.state.location);
       text = this.state.location.coords.latitude
-      console.log(text)
+    //   console.log(text)
     }
+
     return (
       <View style={styles.container}>
         <View style={styles.backgroundTop}>
@@ -329,7 +398,7 @@ export default class Main extends Component {
             </View>
                 <TouchableOpacity onPress={this.openModal}>
             <View style={styles.profil}>
-                <Text style={{fontSize:16, paddingRight:10, color: 'white'}}>Dewi Kinasih</Text>
+                <Text style={{fontSize:normalize(14), paddingRight:10, color: 'white'}}>Dewi Kinasih</Text>
                 <MaterialCommunityIcons name="account-outline" size={24} color="white" />
                 
             </View>
@@ -339,12 +408,12 @@ export default class Main extends Component {
         <View style={styles.main}>
             <View style={styles.daerah}>
                 <View>
-                    <Text style={{fontSize: 18, color:'white'}}>JAWA TENGAH</Text>
-                    <Text style={{fontSize: 18, color:'white'}}>KAB. SEMARANG</Text>
+                    <Text style={{fontSize: normalize(16), color:'white'}}>JAWA TENGAH</Text>
+                    <Text style={{fontSize: normalize(16), color:'white'}}>KAB. SEMARANG</Text>
                 </View>
                 <View style={{alignItems: 'flex-end',}}>
-                    <Text style={{fontSize: 16, color:'white'}}>BANDUNGAN</Text>
-                    <Text style={{fontSize: 24, color:'white'}}>JIMBARAN</Text>
+                    <Text style={{fontSize: normalize(15), color:'white'}}>BANDUNGAN</Text>
+                    <Text style={{fontSize: normalize(22), color:'white'}}>JIMBARAN</Text>
                 </View>
             </View>
     
@@ -355,7 +424,7 @@ export default class Main extends Component {
                 <View style={{flex:9, justifyContent: 'center', paddingRight:4}}>
                     <TouchableOpacity style={{justifyContent:'center'}}
                         activeOpacity={1}
-                        onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Warga"})}>
+                        onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode,title:"Daftar Warga"})}>
                         <Text style={{color: 'grey', fontSize:normalize(15)}}>Cari No. Kartu Tanda Penduduk</Text>
                     </TouchableOpacity>
                 </View>
@@ -367,93 +436,103 @@ export default class Main extends Component {
                 </TouchableOpacity>
             </View>
             :
-            <View style={{borderTopWidth:1, borderTopColor:'#ccc', width:wp('85%'), justifyContent: 'center',alignItems: 'center',padding:10}}> 
-                <Text style={{color:'white', textAlign:'center',fontSize:normalize(18)}}>
+            <View style={{position: "absolute",top:hp('10%'),borderTopWidth:1, borderTopColor:'#ccc', width:wp('85%'), justifyContent: 'center',alignItems: 'center',padding:10,}}> 
+                <Text style={{color:'white', textAlign:'center',fontSize:normalize(15)}}>
                     Mari Bersama Kita Cegah Penyebaran Virus Corona
                 </Text>
             </View>
             }
-
-            <View style={styles.itemContainer}>
                 {this.state.mode == 'admin' ?
-                <View style={{borderRadius:5,marginTop:10,justifyContent:'center', alignItems: 'center',width:wp('55%'), height:30, backgroundColor:'#ff9800'}}>
+                <View style={{position:'absolute',top:hp('21%'),borderRadius:5,marginTop:-10,justifyContent:'center', alignItems: 'center',width:wp('55%'), height:30, backgroundColor:'#ff9800'}}>
                     <Text style={{fontSize: 18, color:'white', fontWeight:'100'}}>Pencatatan Non Penduduk</Text>
                 </View>
                 :
                 <TouchableOpacity onPress={()=> this.props.navigation.navigate("AnggotaKeluarga")} 
-                    style={{borderRadius:5,marginTop:-10,justifyContent:'center', alignItems: 'center',width:wp('55%'), height:30, backgroundColor:'#ff9800'}}>
-                    <Text style={{fontSize: 18, color:'white', fontWeight:'100'}}>Deteksi Dini Covid-19</Text>
+                    style={{position:'absolute',top:hp('21%'),borderRadius:5,marginTop:-10,justifyContent:'center', alignItems: 'center',width:wp('55%'), height:30, backgroundColor:'#ff9800'}}>
+                    <Text style={{fontSize: normalize(15), color:'white', fontWeight:'100'}}>Deteksi Dini Covid-19</Text>
                 </TouchableOpacity>
             
                 }
-                <View style={{backgroundColor:'red', marginTop:10}}>
-                        
+            
+            <View style={styles.itemContainer}>
+                <ScrollView style={{width:'100%', }} contentContainerStyle={{justifyContent:'center', alignItems:'center'}} showsVerticalScrollIndicator={false}>
+                <View style={{backgroundColor:'red', marginTop:50}}>
                         <LinearGradient
                             colors={['white','white', 'transparent', 'transparent']}
                             style={{ width: '100%', height: '50%', position: 'absolute', top: 0 }}
                         />
                         <LinearGradient
-
                             colors={['transparent', 'transparent','white', 'white']}
                             style={{ width: '100%', height: '50%', position: 'absolute', bottom: 0 }}
                         />
                         <LinearGradient
                             start={[0, 0]}
                             end={[1, 0]}
-                            colors={['white','white', 'transparent', 'transparent']}
+                            colors={['white','white', 'transparent','transparent', 'transparent']}
                             style={{ width: '50%', height: '100%', position: 'absolute', left: 0}}
                         />
                         <LinearGradient
                             start={[0, 0]} end={[1, 0]}
-                            colors={['transparent', 'transparent', 'white', 'white']}
+                            colors={['transparent', 'transparent', 'transparent','white', 'white']}
                             style={{ width: '50%', height: '100%', position: 'absolute', right: 0 }}
                         />
 
-                    <View style={styles.rowKey}>
+                    <View style={[styles.rowKey]}>
                         
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Warga Keluar"})} style={styles.button}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar ODP"})} style={styles.button}>
                             <Text style={styles.textButton}>85</Text>
-                            <Text style={styles.textKeterangan}>Warga Keluar</Text>
+                            <Text style={styles.textKeterangan}>ODP</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Warga Masuk"})} style={styles.button}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar PDP"})} style={styles.button}>
                             <Text style={styles.textButton}>15</Text>
-                            <Text style={styles.textKeterangan}>Warga Masuk</Text>
+                            <Text style={styles.textKeterangan}>PDP</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Tamu Luar"})} style={styles.button}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Positif"})} style={styles.button}>
                             <Text style={styles.textButton}>5</Text>
-                            <Text style={styles.textKeterangan}>Tamu Luar</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.rowKey}>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Warga Terindikasi"})} style={styles.button}>
-                            <Text style={styles.textButton}>20</Text>
-                            <Text style={styles.textKeterangan}>Terindikasi</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Warga Rentan"})} style={styles.button}>
-                            <Text style={styles.textButton}>120</Text>
-                            <Text style={styles.textKeterangan}>Warga Rentan</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {title:"Daftar Warga Positif"})} style={styles.button}>
-                            <Text style={styles.textButton}>0</Text>
                             <Text style={styles.textKeterangan}>Positif</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Rentant"})} style={styles.button}>
+                            <Text style={styles.textButton}>20</Text>
+                            <Text style={styles.textKeterangan}>Rentan</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.rowKey}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Pemudik"})} style={styles.button}>
+                            <Text style={styles.textButton}>120</Text>
+                            <Text style={styles.textKeterangan}>Pemudik</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Tamu Luar"})} style={styles.button}>
+                            <Text style={styles.textButton}>4</Text>
+                            <Text style={styles.textKeterangan}>Tamu Luar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Keluar"})} style={styles.button}>
+                            <Text style={styles.textButton}>120</Text>
+                            <Text style={styles.textKeterangan}>Warga Keluar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Masuk"})} style={styles.button}>
+                            <Text style={styles.textButton}>23</Text>
+                            <Text style={styles.textKeterangan}>Warga Masuk</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                <TouchableOpacity onPress={()=>this.handleMapOpen()} style={{marginTop:20,backgroundColor: '#0288d1',justifyContent: 'center',alignItems: 'center', paddingVertical:10, width:wp('80')}}>
-                    <Text style={{color:'white'}}>Lihat Fasilitas Kesehatan Terdekat</Text>
-                </TouchableOpacity>
-
-                <View style={{marginTop:20, width:'100%', justifyContent: 'center',alignItems: 'center',}}>
-                    <TouchableOpacity onPress={()=>{Linking.openURL(`tel:${this.state.phoneNumber}`)}}>
-                        <Call width={70} height={70} />
-                    </TouchableOpacity>
-                    <Text style={{fontSize:18, color:'#d5322e', fontWeight:'700'}}>Panggilan Darurat</Text>
-                </View>
-                <ScrollView style={{width:'100%'}} showsVerticalScrollIndicator={false}>
 
                 </ScrollView>
             </View>
         </View>
+                <View style={{ position: 'absolute',bottom:hp('10%'),alignSelf:'center',flexDirection:'row',marginTop:20,backgroundColor: '#0288d1',alignItems: 'center',height:40, width:wp('80'), borderRadius:5, overflow: 'hidden',}}>
+                    <TouchableOpacity onPress={()=>this.handleMapOpen()} style={{width:'50%',backgroundColor:'#0288d1', justifyContent: 'center',alignItems: 'center',}}>
+                        <Text style={{color:'white'}}>FasKes Terdekat</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> console.log('Pesan Apa Pak/Mbak?')} style={{width:'50%', height:'100%',backgroundColor:'#d5322e', justifyContent: 'center',alignItems: 'center',}}>
+                        <Text style={{color:'white'}}>Pesan Sembako</Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity onPress={()=>{Linking.openURL(`tel:${this.state.phoneNumber}`)}} style={{position: 'absolute',bottom:0,marginTop:20, width:'100%', alignItems: 'center', flexDirection:'row', justifyContent:'center', backgroundColor: '#d5322e'}}>
+                        <View>
+                            <Call width={50} height={50} color="white"/>
+                        </View>
+                        <Text style={{fontSize:18, color:'white', fontWeight:'700'}}>Panggilan Darurat</Text>
+                </TouchableOpacity>
           <Modalize ref={this.modal} 
             adjustToContentHeight
             avoidKeyboardLikeIOS
@@ -476,6 +555,8 @@ export default class Main extends Component {
                     {this.renderQR()}
             </Modalize> 
             {this.state.setLocation ? this.showMap() : null}
+            {/* {this.Confirm()} */}
+
       </View>
     );
   }
@@ -492,8 +573,9 @@ const styles = StyleSheet.create({
         position:'absolute',
         alignSelf:'center',
         width:'200%',
-        height:358,
-        top:-100,
+        // height:hp('56%'),
+        height:normalize(315),
+        top:-hp('19%'),
         zIndex:-1000,
         borderBottomLeftRadius:1000,
         borderBottomRightRadius:1000,
@@ -503,10 +585,11 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         alignItems: 'center',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        // backgroundColor:'white'
     },
     profil: {
-        height:45,
+        height:35,
         paddingLeft:20,
         paddingRight:10,
         backgroundColor:'#c21704',
@@ -527,6 +610,7 @@ const styles = StyleSheet.create({
         width:'85%',
         justifyContent:'space-between',
         alignItems: 'center',
+        position: "absolute",
     },
     statistik_title: {
         fontSize:12,
@@ -551,13 +635,17 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         borderRadius:10,
         width:'85%',
-        flex:1
+        flex:1,
+        position: "absolute",
+        top:hp('10%')
     },
 
     itemContainer: {
         flex:8,
         marginTop:20,
-        alignItems:'center'
+        alignItems:'center',
+        position: 'absolute',
+        top:hp('20%')
     },
     content: {
         // padding: 20,
@@ -610,13 +698,14 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'white',
         color: 'white',
-        width: wp('33%'),
-        paddingVertical:10,
+        width: wp('24.25%'),
+        paddingVertical:8,
         margin: 1,
         marginBottom:0,
         marginRight:0,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        height: hp('15%')
     },
     rowKey: {
         flexDirection: 'row',
@@ -626,15 +715,69 @@ const styles = StyleSheet.create({
     textButton: {
         color: '#d5322e',
         textAlign: 'center',
-        fontSize: 60,
+        fontSize: 30,
         fontWeight:'bold'
     },
     textKeterangan: {
         color: '#d5322e',
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 12,
         fontWeight:'100',
         marginTop:-8
-    }
+    },
+    popupContainer: {
+        position:'absolute',
+        height:hp('100%'),
+        width:wp('100%'),
+        backgroundColor:'rgba(0,0,0,0.5)',
+        flex:1,
+        zIndex:1000000000000,
+        justifyContent:"center",
+        alignItems: 'center',
+        padding:5,
+
+      },
+    
+      infoContainer: {
+        width:wp('65%'),
+        minHeight:hp('30%'),
+        flexDirection:'column',
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopLeftRadius:5,
+        borderTopRightRadius: 5,
+        padding:3,
+      },
+      buttonContainer: {
+        height:40,
+        backgroundColor: 'white',
+        borderRadius:5,
+        width:wp('70%'),
+        flexDirection:'row',
+        overflow:"hidden"
+      },
+      fotoContainer: {
+        flex:7,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      profileContainer: {
+        flex:3,
+        alignItems: 'center',
+        marginTop:-30
+      },
+      batalButton: {
+        flex:1,
+        backgroundColor:'#ccc',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      hapusButton:{
+        flex:1,
+        backgroundColor:'#d4322e',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
     
 })

@@ -70,77 +70,77 @@ export default class TambahPenduduk extends Component {
                 id:1,
                 label:"Tidak Tahu", 
                 value:"Tidak Tahu", 
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             }, 
             {
                 id:2,
                 label:"A", 
                 value:"A",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:3,
                 label:"B", 
                 value:"B",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:4,
                 label:"AB", 
                 value:"AB", 
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:5,
                 label:"O", 
                 value:"O",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:6,
                 label:"A+", 
                 value:"A+",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:7,
                 label:"B+", 
                 value:"B+",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:8,
                 label:"AB+", 
                 value:"AB+",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:9,
                 label:"O+", 
                 value:"O+",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:10,
                 label:"A-", 
                 value:"A-",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             {
                 id:11,
                 label:"B-", 
                 value:"B-",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             
@@ -148,7 +148,7 @@ export default class TambahPenduduk extends Component {
                 id:12,
                 label:"AB-", 
                 value:"AB-",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
             },
             
@@ -156,7 +156,7 @@ export default class TambahPenduduk extends Component {
                 id:13,
                 label:"O-", 
                 value:"O-",
-                color:'#0288d1',
+                color:'#d5322e',
                 size:16
 
             },
@@ -168,70 +168,70 @@ export default class TambahPenduduk extends Component {
                 label:"Tidak/Belum Sekolah/TK/Paud", 
                 value:"Tidak/Belum Sekolah/TK/Paud", 
                 size: 16,
-            color: '#0288d1',}
+            color: '#d5322e',}
             , 
             {   
                 id: 2,
                 label:"Belum Tamat SD/Sederajat", 
                 value:"Belum Tamat SD/Sederajat",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 3,
                 label:"SD/Sederajat", 
                 value:"SD/Sederajat",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 4,
                 label:"SLTP/Sederajat", 
                 value:"SLTP/Sederajat",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 5,
                 label:"SLTA/Sederajat", 
                 value:"SLTA/Sederajat",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 6,
                 label:"Diploma I/II", 
                 value:"Diploma I/II",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 7,
                 label:"Akademi/Diploma III/Sarjana Muda", 
                 value:"Akademi Diploma III/Sarjana Muda",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 8,
                 label:"Diploma IV/Strata I", 
                 value:"Diploma IV/Strata I",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 9,
                 label:"Strata II", 
                 value:"Strata II",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
             {   
                 id: 10,
                 label:"Strata III", 
                 value:"Strata III",
                 size: 16,
-                color: '#0288d1',
+                color: '#d5322e',
             },
           ],
 
@@ -240,7 +240,7 @@ export default class TambahPenduduk extends Component {
                 id: 1,
                 label:"Islam",
                 value:"Islam",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             }, 
 
@@ -248,7 +248,7 @@ export default class TambahPenduduk extends Component {
                 id: 2,
                 label:"Kristen",
                 value:"Kristen",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -256,7 +256,7 @@ export default class TambahPenduduk extends Component {
                 id: 3,
                 label:"Katolik",
                 value:"Katolik",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -264,7 +264,7 @@ export default class TambahPenduduk extends Component {
                 id: 4,
                 label:"Hindu",
                 value:"Hindu",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -272,7 +272,7 @@ export default class TambahPenduduk extends Component {
                 id: 5,
                 label:"Buddha",
                 value:"Buddha",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -280,7 +280,7 @@ export default class TambahPenduduk extends Component {
                 id: 6,
                 label:"Khonghucu",
                 value:"Khonghucu",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -288,7 +288,7 @@ export default class TambahPenduduk extends Component {
                 id: 7,
                 label:"Penghayat Kepercayaan",
                 value:"Penghayat Kepercayaan",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -296,7 +296,7 @@ export default class TambahPenduduk extends Component {
                 id: 8,
                 label:"Lainnya",
                 value:"Lainnya",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -306,7 +306,7 @@ export default class TambahPenduduk extends Component {
                 id: 1,
                 label:"Penduduk Asli/Tetap",
                 value:"Penduduk Asli/Tetap",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
              } , 
 
@@ -314,7 +314,7 @@ export default class TambahPenduduk extends Component {
                 id: 2,
                 label:"Pendatang Domisili",
                 value:"Pendatang Domisili",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -322,7 +322,7 @@ export default class TambahPenduduk extends Component {
                 id: 3,
                 label:"Pindahan",
                 value:"Pindahan",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -332,7 +332,7 @@ export default class TambahPenduduk extends Component {
                 id: 1,
                 label:"Tidak Ada", 
                 value:"Tidak Ada",
-            color:'#0288d1',
+            color:'#d5322e',
             size: 16
             }, 
 
@@ -340,7 +340,7 @@ export default class TambahPenduduk extends Component {
                 id: 2,
                 label:"Fisik", 
                 value:"Fisik",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -348,7 +348,7 @@ export default class TambahPenduduk extends Component {
                 id: 3,
                 label:"Tuna Netra/Buta", 
                 value:"Tuna Netra/Buta",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -356,7 +356,7 @@ export default class TambahPenduduk extends Component {
                 id: 4,
                 label:"Tuna Rungu/Tuli", 
                 value:"Tuna Rungu/Tuli",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -364,7 +364,7 @@ export default class TambahPenduduk extends Component {
                 id: 5,
                 label:"Mental/Jiwa", 
                 value:"Mental/Jiwa",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -372,7 +372,7 @@ export default class TambahPenduduk extends Component {
                 id: 6,
                 label:"Fisik dan Mental", 
                 value:"Fisik dan Mental",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -380,7 +380,7 @@ export default class TambahPenduduk extends Component {
                 id: 7,
                 label:"Lainnya", 
                 value:"Lainnya",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -390,7 +390,7 @@ export default class TambahPenduduk extends Component {
                 id: 1,
                 label:"Belum Kawin", 
                 value:"Belum Kawin" ,   
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             }, 
 
@@ -398,7 +398,7 @@ export default class TambahPenduduk extends Component {
                 id: 2,
                 label:"Kawin", 
                 value:"Kawin",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -406,7 +406,7 @@ export default class TambahPenduduk extends Component {
                 id: 3,
                 label:"Cerai Hidup", 
                 value:"Cerai Hidup",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -414,7 +414,7 @@ export default class TambahPenduduk extends Component {
                 id: 4,
                 label:"Cerai Mati", 
                 value:"Cerai Mati",
-                color:'#0288d1',
+                color:'#d5322e',
                 size: 16
             },
 
@@ -526,7 +526,7 @@ export default class TambahPenduduk extends Component {
                   borderBottomRightRadius:5,
                   justifyContent: 'center', 
                   alignItems: 'center',
-                  backgroundColor:'#0288d1',
+                  backgroundColor:'#d5322e',
                   position: "absolute",
                   top:0,
                   left:0,
@@ -539,8 +539,8 @@ export default class TambahPenduduk extends Component {
             {this.state.modal2Title == "Pilih Pendidikan"?this.state.pendidikanData.map((item,index)=>{
                 return (
                   <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                     </View>
 
                     <View>
@@ -556,8 +556,8 @@ export default class TambahPenduduk extends Component {
                 {this.state.agamaData.map((item,index)=>{
                     if(item.id <= 5){return (
                     <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                        <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                        {this.state.radioActive== item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                        <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                        {this.state.radioActive== item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                         </View>
 
                         <View>
@@ -572,8 +572,8 @@ export default class TambahPenduduk extends Component {
                 {this.state.agamaData.map((item,index)=>{
                     if(item.id > 5){return (
                     <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                        <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                        {this.state.radioActive== item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                        <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                        {this.state.radioActive== item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                         </View>
 
                         <View>
@@ -595,7 +595,7 @@ export default class TambahPenduduk extends Component {
                             activeLineWidth={1}
                             baseColor='gray'
                             selectionColor='grey'
-                            tintColor='#0288d1'
+                            tintColor='#d5322e'
                             lineWidth={1}
                             contentInset={{label: 0, top:4, input:1}}
                             // onChangeText={ (username) => this.setState({ username })} 
@@ -611,8 +611,8 @@ export default class TambahPenduduk extends Component {
             {this.state.golonganDaraData.map((item,index)=>{
                 if(item.id == 1){return (
                   <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                     </View>
 
                     <View>
@@ -627,8 +627,8 @@ export default class TambahPenduduk extends Component {
             {this.state.golonganDaraData.map((item,index)=>{
                 if(item.id != 1){return (
                   <TouchableOpacity style={{flexDirection:'row', margin:5, width:wp('32%')}} onPress={()=> this.setState({radioActive: item.id})}>
-                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                     </View>
 
                     <View>
@@ -646,8 +646,8 @@ export default class TambahPenduduk extends Component {
             {this.state.modal2Title == "Pilih Status Pernikahan" ? this.state.statusData.map((item,index)=>{
                 return (
                   <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                      {this.state.radioActive== item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                     </View>
 
                     <View>
@@ -659,8 +659,8 @@ export default class TambahPenduduk extends Component {
             {this.state.modal2Title == "Pilih Difabel" ? this.state.difabelData.map((item,index)=>{
                 return (
                   <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                      {this.state.radioActive == item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                      {this.state.radioActive == item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                     </View>
 
                     <View>
@@ -672,8 +672,8 @@ export default class TambahPenduduk extends Component {
             {this.state.modal2Title == "Pilih Jenis Kependudukan" ? this.state.jenisKependudukanData.map((item,index)=>{
                 return (
                   <TouchableOpacity style={{flexDirection:'row', margin:5, width:'100%'}} onPress={()=> this.setState({radioActive: item.id})}>
-                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#0288d1':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
-                      {this.state.radioActive == item.id ? <View style={{backgroundColor:'#0288d1', width: 12, height: 12, borderRadius: 12}}/> :null}
+                    <View style={{borderWidth:1,borderColor: this.state.radioActive== item.id ? '#d5322e':'black', borderRadius:18, width:18, height:18, marginRight:10, justifyContent: 'center',alignItems: 'center',}}>
+                      {this.state.radioActive == item.id ? <View style={{backgroundColor:'#d5322e', width: 12, height: 12, borderRadius: 12}}/> :null}
                     </View>
 
                     <View>
@@ -740,12 +740,12 @@ export default class TambahPenduduk extends Component {
     return (
         
         <View style={{ flex: 1, flexDirection:"column"}}>
-            <View style={{height: StatusBar.currentHeight, width: '100%',position:'absolute', backgroundColor: '#0288d1'}} />
+            <View style={{height: StatusBar.currentHeight, width: '100%',position:'absolute', backgroundColor: '#d5322e'}} />
             <View style={{height: 50, width: "100%", flexDirection: 'row', alignItems: 'center', marginTop:StatusBar.currentHeight }}>
                 <TouchableOpacity onPress={this.state.showHeader?() => this.props.navigation.goBack(): this.closeModal}>
-                    <Entypo name={'chevron-left'} color='#0288d1' size={24} style={{ paddingLeft: 10 }} />
+                    <Entypo name={'chevron-left'} color='#d5322e' size={24} style={{ paddingLeft: 10 }} />
                 </TouchableOpacity>
-                <Text style={{ paddingLeft: 10, fontSize: normalize(15), color: "#0288d1", fontWeight: '500' }}>{this.state.showHeader? this.state.action + ' Penduduk ' +this.state.baru:this.state.modalTitle}</Text>
+                <Text style={{ paddingLeft: 10, fontSize: normalize(15), color: "#d5322e", fontWeight: '500' }}>{this.state.showHeader? this.state.action + ' Penduduk ' +this.state.baru:this.state.modalTitle}</Text>
             </View>
         <View style={{flex:9}}>
             <View style={{ height: hp('1%') }}>
@@ -774,7 +774,7 @@ export default class TambahPenduduk extends Component {
                         <View style={{
                                 zIndex: 1000,
                                 borderRadius:5,
-                                borderColor: '#0288d1',
+                                borderColor: '#d5322e',
                                 borderWidth:1,
                                 position: 'absolute',
                                 top:-15, 
@@ -784,7 +784,7 @@ export default class TambahPenduduk extends Component {
 
                             <Text style={{color:'grey'}}>Nomor Kartu Keluarga</Text>
                         </View>
-                        <View style={{width:'80%', backgroundColor:'#0288d1',borderWidth:1,borderRadius:10, borderColor:'#0288d1', height:60, justifyContent: 'center', alignItems:'center'}}>
+                        <View style={{width:'80%', backgroundColor:'#d5322e',borderWidth:1,borderRadius:10, borderColor:'#d5322e', height:60, justifyContent: 'center', alignItems:'center'}}>
                             <Text style={{fontSize: normalize(24), fontWeight:'700',color:'white', paddingTop:5}}>1234567890987654</Text>
                         </View>
                             
@@ -801,7 +801,7 @@ export default class TambahPenduduk extends Component {
                             activeLineWidth={1}
                             baseColor='gray'
                             selectionColor='grey'
-                            tintColor='#0288d1'
+                            tintColor='#d5322e'
                             lineWidth={1}
                             contentInset={{label: 0, top:4, input:1}}
                             // onChangeText={ (username) => this.setState({ username })} 
@@ -821,7 +821,7 @@ export default class TambahPenduduk extends Component {
                             activeLineWidth={1}
                             baseColor='gray'
                             selectionColor='grey'
-                            tintColor='#0288d1'
+                            tintColor='#d5322e'
                             lineWidth={1}
                             contentInset={{label: 0, top:4, input:1}}
                             // onChangeText={ (username) => this.setState({ username })} 
@@ -1010,7 +1010,7 @@ export default class TambahPenduduk extends Component {
                             fontSize={normalize(14)}
                             baseColor='gray'
                             selectionColor='grey'
-                            tintColor='#0288d1'
+                            tintColor='#d5322e'
                             lineWidth={1.1}
                             activeLineWidth={1.1}
                             containerStyle={{width:'100%',backgroundColor:'transparent'}}
@@ -1031,7 +1031,7 @@ export default class TambahPenduduk extends Component {
                             fontSize={normalize(14)}
                             baseColor='gray'
                             selectionColor='grey'
-                            tintColor='#0288d1'
+                            tintColor='#d5322e'
                             lineWidth={1.1}
                             activeLineWidth={1.1}
                             containerStyle={{width:'100%', backgroundColor:'transparent'}}
@@ -1053,7 +1053,7 @@ export default class TambahPenduduk extends Component {
                             fontSize={normalize(14)}
                             baseColor='gray'
                             selectionColor='grey'
-                            tintColor='#0288d1'
+                            tintColor='#d5322e'
                             lineWidth={1.1}
                             activeLineWidth={1.1}
                             containerStyle={{width:'100%',backgroundColor:'transparent'}}
@@ -1077,7 +1077,7 @@ export default class TambahPenduduk extends Component {
                                     activeLineWidth={1.1}
                                     baseColor='gray'
                                     selectionColor='grey'
-                                    tintColor='#0288d1'
+                                    tintColor='#d5322e'
                                     lineWidth={1.1}
                                     contentInset={{label: 0, top:4, input:1}}
                                     // onChangeText={ (username) => this.setState({ username })} 
@@ -1094,7 +1094,7 @@ export default class TambahPenduduk extends Component {
                                     activeLineWidth={1}
                                     baseColor='gray'
                                     selectionColor='grey'
-                                    tintColor='#0288d1'
+                                    tintColor='#d5322e'
                                     lineWidth={1}
                                     contentInset={{label: 0, top:4, input:1}}
                                     // onChangeText={ (username) => this.setState({ username })} 
@@ -1215,7 +1215,7 @@ export default class TambahPenduduk extends Component {
                                     activeLineWidth={1}
                                     baseColor='gray'
                                     selectionColor='grey'
-                                    tintColor='#0288d1'
+                                    tintColor='#d5322e'
                                     lineWidth={1}
                                     contentInset={{label: 0, top:4, input:1}}
                                     // onChangeText={ (username) => this.setState({ username })} 
@@ -1290,7 +1290,7 @@ export default class TambahPenduduk extends Component {
                 </View>
 
             </ScrollView>
-            <TouchableOpacity style={{width:'100%', height:40, justifyContent: 'center', alignItems: 'center', backgroundColor:'#0288d1'}}>
+            <TouchableOpacity style={{width:'100%', height:40, justifyContent: 'center', alignItems: 'center', backgroundColor:'#d5322e'}}>
                 <Text style={{fontWeight:'700', fontSize:normalize(16), color:'white'}}>Simpan</Text>
             </TouchableOpacity>
             </KeyboardAvoidingView>
