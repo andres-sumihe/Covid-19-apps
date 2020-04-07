@@ -1275,12 +1275,12 @@ export default class TambahPenduduk extends Component {
                                 <Image source={this.state.uri} style={{width:'100%', height: '100%'}} resizeMode="cover"/>
                             </View>
                         </View>
-                        <TouchableOpacity 
+                        {/* <TouchableOpacity 
                             onPress={()=>this.props.navigation.navigate("CameraApp")}
                             style={styles.buttonPhoto} 
                             activeOpacity={0.5}>
                             <Text style={{fontSize:normalize(14)}}>{this.state.titleButtonPhoto}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         
                     {this.state.action == "Tambah" ? null:
                         <TouchableOpacity style={{height:wp('10%'), width:'55%', backgroundColor:'#d4322e', justifyContent: 'center', alignItems: 'center', borderRadius:5}}>
@@ -1398,7 +1398,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#ccc',
         flexDirection:'column',
         borderTopRightRadius:5,
-        borderTopLeftRadius:5
+        borderTopLeftRadius:5,
+        borderBottomRightRadius:5,
+        borderBottomLeftRadius:5
     },
     buttonPhoto:{
         height:wp('10%'),

@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image, ImageBackground, Alert} from 'react
 import {TextField} from 'react-native-material-textfield';
 import {Button, ThemeProvider} from 'react-native-elements';
 import {LinearGradient} from 'expo-linear-gradient'
-import {Entypo, EvilIcons} from '@expo/vector-icons'
+import {Entypo, EvilIcons, FontAwesome} from '@expo/vector-icons'
 import { widthPercentageToDP as wp}  from 'react-native-responsive-screen';
 
 
@@ -60,7 +60,7 @@ export default class Login extends React.Component{
                     <View style={{width:'75%'}}>
                         <View style={{}}>
                             <View style={{position:'absolute', bottom:15}}>
-                                <EvilIcons name="lock" size={24} color="white" />
+                                <FontAwesome name="id-card" size={15} color="white" />
                             </View>
                             <TextField
                                 value={username}
@@ -77,7 +77,7 @@ export default class Login extends React.Component{
                         </View>
                         <View style={{}}>
                             <View style={{position:'absolute', bottom:15}}>
-                                <Entypo name="key" size={15} color="white" />
+                                <FontAwesome name="id-card-o" size={15} color="white" />
                             </View>
                             <TextField
                                 value={password}

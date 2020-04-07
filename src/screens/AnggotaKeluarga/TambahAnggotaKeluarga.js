@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StatusBar, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StatusBar, StyleSheet, Alert, KeyboardAvoidingView } from 'react-native';
 import { Entypo, Feather, AntDesign, SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -18,6 +18,9 @@ export default class TambahAnggotaKeluarga extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      // STATE ON MODAL 2 OPEN
+      nameOnEdit:'',
+      kkOnEdit:'',
       searchText: '',
       filter: 'Semua',
       show: true,
@@ -131,7 +134,7 @@ export default class TambahAnggotaKeluarga extends Component {
   modal2 = React.createRef();
   renderQR = () => {
     return(
-      <View style={styles.content}>
+      <View style={[styles.content, {height:hp('25%')}]}>
       <View style={{
             paddingHorizontal:30, 
             paddingVertical:5, 
@@ -156,12 +159,12 @@ export default class TambahAnggotaKeluarga extends Component {
               alignItems: 'center',
               paddingVertical:7,
               borderRadius:5, 
-              paddingHorizontal:20, 
+              // paddingHorizontal:20, 
               backgroundColor:'#4caf50', 
-              width:wp('38%'),
-              height:wp('38%')}}>
-            <Text style={{color: 'white', fontWeight:'700',fontSize: normalize(20)}}>Keluar</Text>
-            <Text style={{color: 'white', fontWeight:'700',fontSize: normalize(20)}}>Desa</Text>
+              width:wp('18%'),
+              height:wp('18%')}}>
+            <Text style={{color: 'white',fontSize: normalize(13)}}>Keluar</Text>
+            <Text style={{color: 'white',fontSize: normalize(13)}}>Desa</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={()=> this.openModal("Masuk Desa")}
@@ -170,39 +173,40 @@ export default class TambahAnggotaKeluarga extends Component {
               alignItems: 'center',
               paddingVertical:7,
               borderRadius:5, 
-              paddingHorizontal:20, 
+              // paddingHorizontal:20, 
               backgroundColor:'#0288d1', 
-              width:wp('38%'),
-              height:wp('38%')}}>
-            <Text style={{color: 'white', fontWeight:'700',fontSize: normalize(20)}}>Masuk</Text>
-            <Text style={{color: 'white', fontWeight:'700',fontSize: normalize(20)}}>Desa</Text>
+              width:wp('18%'),
+              height:wp('18%')}}>
+            <Text style={{color: 'white',fontSize: normalize(13)}}>Masuk</Text>
+            <Text style={{color: 'white',fontSize: normalize(13)}}>Desa</Text>
           </TouchableOpacity>
+          <TouchableOpacity 
+              onPress={this.handlePositifButton}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical:7,
+                borderRadius:5, 
+                backgroundColor:'#ff9800', 
+                width:wp('18%'),
+                height:wp('18%')}}>
+              <Text style={{color: 'white', fontSize: normalize(14)}}>PDP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={this.handlePositifButton}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical:7,
+                borderRadius:5, 
+                backgroundColor:'#d5322e', 
+                width:wp('18%'),
+                height:wp('18%')}}>
+              <Text style={{color: 'white', fontSize: normalize(14)}}>Positif</Text>
+            </TouchableOpacity>
         </View>
             
-            <TouchableOpacity 
-              onPress={this.handlePositifButton}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical:7,
-                borderRadius:5, 
-                marginTop:10,
-                backgroundColor:'#ff9800', 
-                width:wp('80%')}}>
-              <Text style={{color: 'white', fontSize: normalize(14)}}>Pasien Dalam Pengawasan</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              onPress={this.handlePositifButton}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical:7,
-                borderRadius:5, 
-                marginTop:10,
-                backgroundColor:'#d5322e', 
-                width:wp('80%')}}>
-              <Text style={{color: 'white', fontSize: normalize(14)}}>Positif Virus Corona</Text>
-            </TouchableOpacity>
+            
       </View>
     </View>
       )
@@ -270,12 +274,12 @@ export default class TambahAnggotaKeluarga extends Component {
             <TextField
               // value={rt}
               label='Tuliskan Keperluan Mobilitasnya'
-              keyboardType='numeric'
+              keyboardType='default'
               textColor='grey'
               fontSize={normalize(14)}
               baseColor='gray'
               selectionColor='grey'
-              tintColor='#0288d1'
+              tintColor='#d5322e'
               lineWidth={1}
               activeLineWidth={1}
               containerStyle={{width:'100%',backgroundColor:'transparent'}}
@@ -330,8 +334,8 @@ export default class TambahAnggotaKeluarga extends Component {
       this.modal.current.close();
     }
   };
-  openModal2 = (e) => {
-    this.setState({modal2Title: e})
+  openModal2 = (name, noKK) => {
+    this.setState({nameOnEdit: name, kkOnEdit: noKK})
     // this.setState({showHeader: false})
     if (this.modal2.current) {
       this.modal2.current.open();
@@ -365,30 +369,43 @@ export default class TambahAnggotaKeluarga extends Component {
     selectedButton = selectedButton ? selectedButton.value : this.state.dataRadio[0].label;
     const Confirm = () => {
       return(
-        <View style={styles.popupContainer}>
+        <KeyboardAvoidingView enabled behavior="padding" style={styles.popupContainer}>
           <View style={styles.infoContainer}>
-            <View style={styles.fotoContainer}>
-                <View style={{overflow:'hidden',width:140, height:140, borderColor:'#d5322e', borderWidth:3, borderRadius:100, padding:2, alignItems: "center", justifyContent:"center"}}>
-                    {/* <View style={{width:'100%', height:'100%', borderRadius:100, overflow: "hidden", justifyContent:'center', alignItems: 'center',}}> */}
-                        <Image source={this.state.imageWillDeleted} style={{width:138, height:138}} resizeMode="cover" styl/>
-                    {/* </View> */}
-                </View>
-            </View>
-            <View style={styles.profileContainer}>
-              <Text style={{fontWeight:'700', fontSize: normalize(20)}}>{this.state.namaWillDeleted}</Text>
-              <Text style={{fontSize: normalize(15)}}>{this.state.noKTPWillDeleted}</Text>
-              <Text style={{fontSize: normalize(15)}}>{this.state.selectedPosition}</Text>
-            </View>
+              <Text style={{fontSize: normalize(16), marginTop:10}}>{this.state.kkOnEdit}</Text>
+              <Text style={{fontWeight:'700', fontSize: normalize(20), marginBottom:10}}>{this.state.nameOnEdit}</Text>
+
+              <TextField
+              // value={rt}
+              label='Nama Pelapor'
+              keyboardType='default'
+              textColor='grey'
+              fontSize={normalize(14)}
+              baseColor='gray'
+              selectionColor='grey'
+              tintColor='#d5322e'
+              lineWidth={1}
+              activeLineWidth={1}
+              containerStyle={{width:'100%',backgroundColor:'transparent'}}
+              contentInset={{label: 0, top:4, input:1}}
+              // onChangeText={ (username) => this.setState({ username })} 
+              />
+
+              <View style={{flex:1, marginBottom:20, width:'100%'}}>
+                  <TouchableOpacity onPress={()=>this.setState({showCalendar: true})} style={{borderBottomWidth:1, borderColor:'grey', height:30}}>
+                      <Text style={{bottom:5,left:1, position: 'absolute', color:'grey', fontSize:normalize(14)}}>{this.state.tanggalLahir}</Text>   
+                  </TouchableOpacity>
+              </View>
+              {/* <Text style={{fontSize: normalize(15)}}>{this.state.selectedPosition}</Text> */}
           </View>
           <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.batalButton} onPress={()=> this.setState({confirm: false})}>
                     <Text >Batal</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.hapusButton}>
-                    <Text style={{color:'white'}}>Tambahkan</Text>
+                    <Text style={{color:'white'}}>Tetapkan</Text>
               </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       )}
     return (
       <View style={{ flex: 1, flexDirection:"column", paddingTop: StatusBar.currentHeight }}>
@@ -416,9 +433,9 @@ export default class TambahAnggotaKeluarga extends Component {
             </View>
           <ScrollView style={{marginBottom:80}}>
             {this.state.data.map((item, index) => {
-              return this.state.mode === 'admin' ?<SwipeRow 
+              return this.state.mode === 'admin' && this.state.title== 'Daftar Warga' ?<SwipeRow 
                   ref={(c) => { this.rows[item.id] = c }}
-                  onRowPress={this.openModal2}
+                  onRowPress={()=>this.openModal2(item.name, item.noKK)}
                   onRowDidOpen={()=> this.setState({activeRow: item.id})}
                   onRowOpen={() => {
                     if (this.selectedRow && this.selectedRow !== this.rows[item.id]) { this.selectedRow.closeRow(); }
@@ -439,14 +456,31 @@ export default class TambahAnggotaKeluarga extends Component {
                 </View>
                     <TambahCard uri={item.uri}  name={item.name} noKK={item.noKK} />
               </SwipeRow>
-              :<TambahCard uri={item.uri}  name={item.name} noKK={item.noKK} />
+              :
+              <SwipeRow 
+                  ref={(c) => { this.rows[item.id] = c }}
+                  onRowDidOpen={()=> this.setState({activeRow: item.id})}
+                  onRowOpen={() => {
+                    if (this.selectedRow && this.selectedRow !== this.rows[item.id]) { this.selectedRow.closeRow(); }
+                    this.selectedRow = this.rows[item.id]
+                  }}
+                  rightOpenValue={-50} style={styles.standalone} key={item.id} >
+                <View style={styles.standaloneRowBack}>
+                  <TouchableOpacity
+                    // onPress={{}}
+                    style={{ alignItems: 'center', justifyContent: 'center',width:50, height:'100%', }}>
+                    <FontAwesome name='trash-o' size={24} color='white' />
+                  </TouchableOpacity>
+                </View>
+                    <TambahCard uri={item.uri}  name={item.name} noKK={item.noKK} />
+              </SwipeRow>
             })
             }
 
           </ScrollView>
           {this.state.showButton?<View style={{ bottom:10, right:10,position: 'absolute', flexDirection:"row", alignItems: 'center',}}>
             <Surface style={{right:-10,height:30, width:100, paddingRight:10, paddingLeft:10, justifyContent: 'center', alignItems: 'center', backgroundColor:'orange', borderTopStartRadius:10, borderBottomStartRadius:10}}>
-              <Text style={{fontSize:10, color:'white'}}>Tambah Baru</Text>
+              <Text style={{fontSize:10, color:'white'}}>Tambah KTP Baru</Text>
             </Surface>
             <Surface style={{ elevation:0,width:60,height:60, justifyContent:'center', alignItems: 'center', borderRadius:30,backgroundColor:'#0288d1'}}>
               <TouchableOpacity onPress={this.handleTambahPenduduk}>
@@ -460,9 +494,9 @@ export default class TambahAnggotaKeluarga extends Component {
 
           <Modalize ref={this.modal2} handleStyle={{display:"none"}} 
                 adjustToContentHeight
-                avoidKeyboardLikeIOS
-                keyboardAvoidingBehavior="padding"
-                keyboardAvoidingOffset={50}
+                // avoidKeyboardLikeIOS
+                // keyboardAvoidingBehavior="padding"
+                // keyboardAvoidingOffset={50}
                 key={this.state.modal2Key} 
                 onClosed={()=> this.setState({showHeader: true, modal2Key: new Date().getTime()} )}>
                     {this.renderQR()}
@@ -470,6 +504,7 @@ export default class TambahAnggotaKeluarga extends Component {
             <Modalize ref={this.modal} adjustToContentHeight 
                 avoidKeyboardLikeIOS
                 keyboardAvoidingBehavior="padding"
+                keyboardAvoidingOffset={20}
                 handleStyle={{display:"none"}}
                 onClose={()=> this.setState({show: !this.state.show})}
                 onOpen={this.closeModal2}>
@@ -506,7 +541,7 @@ const styles = StyleSheet.create({
   },
   standaloneRowBack: {
     alignItems: 'center',
-    backgroundColor: '#4caf50',
+    backgroundColor: '#d5322e',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -545,7 +580,7 @@ const styles = StyleSheet.create({
     right: 75,
   },
   backRightBtnRight: {
-    backgroundColor: '#4caf50',
+    backgroundColor: '#d5322e',
     right: 0,
   },
   controls: {
@@ -589,9 +624,11 @@ const styles = StyleSheet.create({
 
   infoContainer: {
     width:wp('65%'),
-    height:hp('40%'),
+    height:hp('30%'),
     flexDirection:'column',
     backgroundColor: 'white',
+    alignItems:'center',
+    padding:10,
     borderTopLeftRadius:5,
     borderTopRightRadius: 5,
 

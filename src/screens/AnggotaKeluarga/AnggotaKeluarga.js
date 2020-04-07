@@ -151,7 +151,6 @@ export default class AnggotaKeluarga extends Component {
             ya: false,
             tidak: true,
         },
-        
     ],
       listViewData: Array(20).fill('').map((_, i) => `item #${i}`),
     }
@@ -292,12 +291,11 @@ export default class AnggotaKeluarga extends Component {
               height: hp('1%'),
             }} />
         </View>
-        <ScrollView contentContainerStyle={{flex:7, alignItems: 'center'}}>
+        <ScrollView scrollEnabled style={{width:'100%'}} contentContainerStyle={{alignItems: 'center'}}>
           <View style={{paddingHorizontal:20,paddingVertical:10, backgroundColor:'grey', width:'100%' }}>
             <Text style={{color: 'white'}}>Gejala Yang Dirasakan</Text>
           </View>
         {this.state.dataRadio.map((item,index)=>{
-
             if(item.id <= 5){
             return (
               <View key={item.id} style={{flexDirection:'row',borderBottomWidth:1, borderBottomColor: '#ccc', marginVertical:5,paddingVertical:5, width: wp('100%')-40,justifyContent:'space-between', alignItems: 'center',}} onPress={()=> this.setState({radioActive: item.id})}>

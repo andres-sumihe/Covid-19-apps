@@ -444,7 +444,7 @@ export default class Main extends Component {
             }
                 {this.state.mode == 'admin' ?
                 <View style={{position:'absolute',top:hp('21%'),borderRadius:5,marginTop:-10,justifyContent:'center', alignItems: 'center',width:wp('55%'), height:30, backgroundColor:'#ff9800'}}>
-                    <Text style={{fontSize: 18, color:'white', fontWeight:'100'}}>Pencatatan Non Penduduk</Text>
+                    <Text style={{fontSize: normalize(15), color:'white', fontWeight:'100'}}>Pencatatan Non Penduduk</Text>
                 </View>
                 :
                 <TouchableOpacity onPress={()=> this.props.navigation.navigate("AnggotaKeluarga")} 
@@ -479,39 +479,39 @@ export default class Main extends Component {
 
                     <View style={[styles.rowKey]}>
                         
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar ODP"})} style={styles.button}>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Rentan"})} style={styles.button}>
                             <Text style={styles.textButton}>85</Text>
+                            <Text style={styles.textKeterangan}>Rentan</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar ODP"})} style={styles.button}>
+                            <Text style={styles.textButton}>15</Text>
                             <Text style={styles.textKeterangan}>ODP</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar PDP"})} style={styles.button}>
-                            <Text style={styles.textButton}>15</Text>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga PDP"})} style={styles.button}>
+                            <Text style={styles.textButton}>5</Text>
                             <Text style={styles.textKeterangan}>PDP</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Positif"})} style={styles.button}>
-                            <Text style={styles.textButton}>5</Text>
-                            <Text style={styles.textKeterangan}>Positif</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Rentant"})} style={styles.button}>
                             <Text style={styles.textButton}>20</Text>
-                            <Text style={styles.textKeterangan}>Rentan</Text>
+                            <Text style={styles.textKeterangan}>Positif</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.rowKey}>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Pemudik"})} style={styles.button}>
-                            <Text style={styles.textButton}>120</Text>
-                            <Text style={styles.textKeterangan}>Pemudik</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Tamu Luar"})} style={styles.button}>
-                            <Text style={styles.textButton}>4</Text>
-                            <Text style={styles.textKeterangan}>Tamu Luar</Text>
-                        </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Keluar"})} style={styles.button}>
                             <Text style={styles.textButton}>120</Text>
                             <Text style={styles.textKeterangan}>Warga Keluar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Masuk"})} style={styles.button}>
-                            <Text style={styles.textButton}>23</Text>
+                            <Text style={styles.textButton}>4</Text>
                             <Text style={styles.textKeterangan}>Warga Masuk</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Warga Tamu Luar"})} style={styles.button}>
+                            <Text style={styles.textButton}>120</Text>
+                            <Text style={styles.textKeterangan}>Tamu Luar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={1} onPress={()=> this.props.navigation.navigate("TambahAnggotaKeluarga", {privilages: this.state.mode, title:"Daftar Pemudik"})} style={styles.button}>
+                            <Text style={styles.textButton}>23</Text>
+                            <Text style={styles.textKeterangan}>Pemudik</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -627,11 +627,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     search: {
-        maxHeight:35,
+        maxHeight:40,
         flexDirection:'row',
         alignItems: 'center',
         paddingHorizontal:10,
-        paddingVertical:-5,
+        paddingVertical:5,
         backgroundColor:'white',
         borderRadius:10,
         width:'85%',
