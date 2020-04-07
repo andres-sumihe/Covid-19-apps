@@ -40,8 +40,9 @@
     "android": {
       "package": "com.adminduk",
       "config": {
-        "googleMaps": "TARUH_API_DISINI"
+        "googleMaps": {
+          "apiKey": "AIzaSyBrMv0s5shnpAWLbuVFcww-l5BB-PCh9c8"
+        }
       }
     }
   }
-}
