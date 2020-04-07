@@ -38,11 +38,12 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.adminduk",
+      "package": "com.covid19",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBrMv0s5shnpAWLbuVFcww-l5BB-PCh9c8"
+          "apikey": "AIzaSyBrMv0s5shnpAWLbuVFcww-l5BB-PCh9c8"
         }
       }
     }
   }
+}
