@@ -1,5 +1,6 @@
 {
   "expo": {
+    "primaryColor": "#d5322e",
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": [
@@ -37,7 +38,12 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.adminduk"
+      "package": "com.covid19",
+      "config": {
+        "googleMaps": {
+          "apikey": "AIzaSyBrMv0s5shnpAWLbuVFcww-l5BB-PCh9c8"
+        }
+      }
     }
   }
 }
