@@ -1,8 +1,9 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/react-native-get-location
+  E:\Program Files\nodejs\node.exe E:\Program Files (x86)\Yarn\bin\yarn.js install
 
 PATH: 
-  C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\IBM\SPSS\Statistics\25\JRE\bin;C:\Program Files\Java\jdk1.8.0_111\bin;C:\Users\Andflow\AppData\Local\Programs\Python\Python38-32;C:\Users\Andflow\AppData\Local\Programs\Python\Python38-32\Scripts;C:\Program Files\Git\cmd;C:\Users\Andflow\Desktop\BOT\aircrack-ng\scripts;C:\Users\Andflow\Desktop;C:\Program Files (x86)\QuickTime\QTSystem\;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\MinGW\bin;C:\Users\Andflow\AppData\Local\Programs\Python\Python38\Scripts\;C:\Users\Andflow\AppData\Local\Programs\Python\Python38\;C:\Users\Andflow\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\JetBrains\PyCharm Community Edition 2019.1.1\bin;;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.1\bin;;C:\Users\Andflow\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Andflow\AppData\Roaming\npm;C:\Users\Andflow\AppData\Local\Yarn\bin
+  C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\xampp\php;C:\composer;C:\Python27;C:\Users\USER\AppData\Roaming\Composer\vendor\bin;C:\adb;C:\Program Files\OpenVPN\bin;C:\Program Files\Git\cmd;C:\cygwin64\bin;C:\MinGW;E:\Program Files\IBM SPSS\JRE\bin;E:\tools\steghidebrute;E:\tools\steghide;F:\share\AndroidSDK;C:\ProgramData\chocolatey\bin;C:\Program Files\PuTTY\;E:\Program Files\SPSS\JRE\bin;C:\driver\chromedriver;E:\Anaconda3\condabin;E:\Program Files\cmder_mini\bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;E:\download\ToolAlite\ToolAlite
+  ;C:\Program Files\Java\jdk1.8.0_74\bin;E:\project\flutter\flutter\bin;E:\project\python;E:\Program Files\curl\bin;F:\share\AndroidSDK\platform-tools;E:\Program Files (x86)\Yarn\bin\;E:\Program Files\nodejs\;E:\netcat\;C:\MinGW\bin\;C:\Program Files\Java\jdk1.8.0_74\bin;C:\Users\USER\AppData\Local\Yarn\bin;C:\Users\USER\AppData\Roaming\npm;E:\Program Files\Microsoft VS Code\bin
 
 Yarn version: 
   1.19.1
@@ -14,17 +15,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-native-get-location: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66035:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140564:22)
-      at Request.emit (events.js:209:13)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141536:10)
-      at Request.emit (events.js:209:13)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141458:12)
-      at Object.onceWrapper (events.js:298:28)
-      at IncomingMessage.emit (events.js:214:15)
-      at endReadableNT (_stream_readable.js:1178:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:60:26)
 
 npm manifest: 
   {
@@ -39,12 +31,13 @@ npm manifest:
     },
     "dependencies": {
       "@react-native-community/datetimepicker": "^2.2.3",
-      "@react-native-community/geolocation": "1.4.2",
+      "@react-native-community/netinfo": "^5.7.0",
       "expo": "~36.0.0",
       "expo-barcode-scanner": "^8.0.0",
       "expo-camera": "^8.0.0",
       "expo-font": "~8.0.0",
       "expo-image-picker": "^8.0.2",
+      "expo-location": "~8.0.0",
       "expo-svg-uri": "^1.1.0",
       "jwt-decode": "^2.2.0",
       "metro-config": "^0.58.0",
@@ -1234,10 +1227,10 @@ Lockfile:
     dependencies:
       invariant "^2.2.4"
   
-  "@react-native-community/geolocation@1.4.2":
-    version "1.4.2"
-    resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-1.4.2.tgz#7228c6d37c2f55017af9c49c2b9ad586d9bcb9f8"
-    integrity sha512-9x9dHDeUXnh2larA4zTT3y/tXPmRnysh5o9fsNbGcnUKPj1BUCIHnGGPxEIDnwP1DNIMP2DN9DmuMHImtTbX6A==
+  "@react-native-community/netinfo@^5.7.0":
+    version "5.7.0"
+    resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.7.0.tgz#54be55f22c6a6358d5d61f2aa1bc1de20c7b53b6"
+    integrity sha512-ZhmkaqRpLFvOMu/Ln3YCitBJUgk7lbFsvcinbW/LIktXM6BwVwEZPTkYr+N74hEAhKz2CcDN8aMzzaokxwxRqg==
   
   "@react-navigation/core@^3.7.2":
     version "3.7.2"

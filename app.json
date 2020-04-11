@@ -41,7 +41,7 @@
       "package": "com.covid19",
       "config": {
         "googleMaps": {
-          "apikey": "AIzaSyBrMv0s5shnpAWLbuVFcww-l5BB-PCh9c8"
+          "apiKey": "AIzaSyBrMv0s5shnpAWLbuVFcww-l5BB-PCh9c8"
         }
       }
     }
