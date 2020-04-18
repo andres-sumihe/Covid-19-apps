@@ -1,5 +1,5 @@
 import React, { Component,useState } from 'react';
-import {Platform,View, Text, StyleSheet, Image, TouchableOpacity, StatusBar, ScrollView, Picker, Keyboard, KeyboardAvoidingView, DatePickerAndroid, BackHandler} from 'react-native';
+import {Platform,View, Text, StyleSheet, Image, TouchableOpacity, StatusBar, ScrollView, Picker, Keyboard, KeyboardAvoidingView, DatePickerAndroid, BackHandler, Alert} from 'react-native';
 import {EvilIcons, Entypo, FontAwesome} from '@expo/vector-icons';
 import {
     TextField,
@@ -20,10 +20,12 @@ import {
   handleAndroidBackButton,
   removeAndroidBackButtonHandler
 } from '../../components/EpicFunction';
-import { getRegionals } from '../../api/regionals';
-import { getJobs } from '../../api/jobs';
+import { getRegionals, getRegional } from '../../api/regionals';
+import { getJobs, getJob } from '../../api/jobs';
 import { getCountries } from '../../api/countries';
-import { getEthnics } from '../../api/ethnics';
+import { getEthnics, getEthnic } from '../../api/ethnics';
+import { getZones, getZone } from '../../api/zones';
+import { storePeoples, updatePeople, deletePeople } from '../../api/peoples';
 
 
 
@@ -434,7 +436,7 @@ export default class TambahPenduduk extends Component {
              {"dimana":"Ya"},{"dimana":"Tidak"}
           ],
           konfirmNegara: "Indonesia",
-          sesuaiKKConfirm: "Ya",
+          sesuaiKKConfirm: "Tidak",
           jenisKependudukan: "Penduduk Asli/Tetap",
           difabel:"Tidak Ada",
           tempatTinggalCOnfirm: "Ya",
@@ -493,6 +495,12 @@ export default class TambahPenduduk extends Component {
               subdistrictID: null,
               villageID: null,
               zoneID: null,
+              dusunID: null,
+              rwID: null,
+              rtID: null,
+              dusun: '',
+              rw: '',
+              rt: '',
               province: '',
               district: '',
               subdistrict: '',
@@ -505,16 +513,135 @@ export default class TambahPenduduk extends Component {
           familyID: '',
           name: '',
           NIK: '',
-          type: 'Penduduk Asli / Tetap',
+          KK: '',
+          type: 'Penduduk Asli/Tetap',
           disability: 'Tidak ada',
           marital: "Belum Kawin",
+            officeID: '7f15509afee8f299216aa0e8cf9b5865',
+            query: '',
+            loading: false,
+            loadingPeople: false,
+          peopleID: ''
         };
 
   }
   
   componentDidUpdate(){
-      this.handleSimpan()
+    //   this.handleSimpan()
   }
+
+  assignPeople = () => {
+      this.setState({loadingPeople: true})
+      const {people} = this.props.navigation.state.params
+      let {residence, regionals, jobs, ethnics, countries, familyID, name, religion, education, NIK, KK,type, disability, marital, peopleID, tanggalLahir, jenisKelamin, blood} = this.state
+      residence.provinceID = people.provinceID
+      residence.districtID = people.districtID
+      residence.subdistrictID = people.subdistrictID
+      residence.villageID = people.villageID
+      residence.zoneID = people.zoneID
+    
+      regionals.districtID = people.birthlocationID
+      jobs.jobID = people.jobID
+      ethnics.ethnicID = people.ethnicID
+      console.log(ethnics, people.ethnicID)
+      countries.countryID = people.countryID
+      familyID = people.familyID
+      name = people.name
+      religion = people.religion
+      education = people.education
+      NIK = people.NIK
+      KK = people.KK
+      type = people.type
+      disability = people.disability==null?'Tidak Ada':people.disability
+      marital = people.marital
+      peopleID = people.peopleID
+      tanggalLahir = people.birthdate
+      jenisKelamin = people.gender=='L'?'Laki-laki':'Perempuan'
+      blood = people.blood?people.blood:'Tidak Tahu'
+      KK = people.KK
+      console.log(people)
+      console.log('assign',people.name,blood,disability,people.NIK)
+      console.log(people.NIK)
+      this.nameref.setValue(name)
+      this.nikref.setValue(NIK)
+      this.kkref.setValue(KK)
+      this.setState({ 
+          residence, 
+          regionals, 
+          jobs, 
+          ethnics, 
+          countries, 
+          familyID, 
+          name, 
+          religion, 
+          education, 
+          NIK, 
+          type, 
+          disability, 
+          marital, 
+          peopleID, 
+          tanggalLahir, 
+          jenisKelamin,
+          blood,
+          KK
+        }, ()=>this.getKelahiran(people.birthlocationID))
+  }
+
+  getKelahiran = async (birthloc) => {
+    const {regionals} = this.state
+    const district = await getRegional(birthloc)
+    const province = await getRegional(district.parentID)
+    regionals.district=district.name
+    regionals.province=province.name
+    regionals.districtID=district.regionalID
+    regionals.provinceID=province.regionalID
+    this.setState({regionals})
+    console.log(district)
+    this.getInfo()
+  }
+
+  getInfo = async () => {
+      const {residence, jobs, ethnics} = this.state
+      const province = await getRegional(residence.provinceID)
+      const district = await getRegional(residence.districtID)
+      const subdistrict = await getRegional(residence.subdistrictID)
+      const village = await getRegional(residence.villageID)
+      residence.province = province.name
+      residence.district = district.name
+      residence.subdistrict = subdistrict.name
+      residence.village = village.name
+      
+      this.setState({ residence, jobs, ethnics })
+      console.log('rt',residence.zoneID)
+    //   const rt = await getZone(residence.zoneID)
+    //   const rw = await getZone(rt.parentID)
+    //   const dusun = await getZone(rw.parentID)
+    //   residence.dusun = dusun.name
+      residence.provinceID = province.regionalID
+      residence.districtID = district.regionalID
+      residence.subdistrictID = subdistrict.regionalID
+    //   residence.rw = rw.name
+    //   residence.rt = rt.name
+      residence.villageID = village.regionalID
+    //   residence.dusunID = dusun.zoneID
+    //   residence.rwID = rw.zoneID
+    //   residence.rtID = rt.zoneID
+      try{
+          const job = await getJob(jobs.jobID)
+          jobs.name=job.name
+      }catch(err){
+
+      }
+      try{
+          const ethnic = await getEthnic(ethnics.ethnicID)
+          ethnics.name = ethnic.name
+      }catch(err){
+
+      }
+      this.setState({residence, jobs, ethnics})
+      this.setState({ peopleLoading: false })
+  }
+
 
   componentDidMount(){
       
@@ -528,6 +655,7 @@ export default class TambahPenduduk extends Component {
                uri: this.props.navigation.getParam("uri")
             })
             console.log("INI URI: "+ this.props.navigation.getParam("uri"))
+            this.assignPeople()
        }else{
            this.setState({baru: "Baru", titleButtonPhoto:"Ambil Foto"})
        } 
@@ -551,11 +679,14 @@ export default class TambahPenduduk extends Component {
         });
     }
 
-    fetchRegional = async (parentID, r) => {
-        console.log(this.state.modalTitle)
+    fetchRegional = async (parentID, r, title) => {
+        this.setState({loading: true})
         const {residence, regionals} = this.state
         if(r) parentID = residence.provinceID
-        const res = await getRegionals(parentID)
+        if(title=='Provinsi'){
+            parentID = null
+        }
+        const res = await getRegionals(parentID, this.state.query)
         if(r){
             residence.data = res.data.rows
             this.setState({residence})
@@ -563,7 +694,8 @@ export default class TambahPenduduk extends Component {
             regionals.data = res.data.rows
             this.setState({regionals})
         }
-        console.log(regional.meta)
+        console.log(res.meta)
+        this.setState({loading: false})
     }
 
     fetchJobs = async () => {
@@ -590,19 +722,20 @@ export default class TambahPenduduk extends Component {
 
     fetchSubdistrict = async () => {
         const {residence} = this.state
-        const res = await getRegionals(residence.districtID)
+        const res = await getRegionals(residence.districtID, this.state.query)
         residence.data = res.data.rows
         this.setState({residence})
     }
     fetchVillage = async () => {
         const {residence} = this.state
-        const res = await getRegionals(residence.subdistrictID)
+        const res = await getRegionals(residence.subdistrictID, this.state.query)
         residence.data = res.data.rows
         this.setState({residence})
     }
-    fetchZone = async () => {
+    fetchZone = async (parentID) => {
         const {residence} = this.state
-        const res = await getRegionals(residence.villageID)
+        let res
+        res = await getZones(parentID)
         residence.data = res.data.rows
         this.setState({residence})
     }
@@ -612,7 +745,13 @@ export default class TambahPenduduk extends Component {
             <View style={styles.content}>
               <View style={{ borderBottomColor: '#eee', borderBottomWidth: 1 }}>
                 <SearchBar
-                    onChangeText={search => {this.setState({ searchText: search }); }}
+                    onChangeText={search => {
+                            this.setState({ query: search }); 
+                            const {modalTitle} = this.state
+                            if(modalTitle == 'Pilih Provinsi'){
+                                this.fetchRegional()
+                            }
+                        }}
                                     containerStyle={{
                     width: '100%', backgroundColor: 'white', borderBottomColor: 'transparent',
                     borderTopColor: 'transparent', height:40, justifyContent:'center',
@@ -620,10 +759,10 @@ export default class TambahPenduduk extends Component {
                     inputContainerStyle={{ backgroundColor: 'transparent' }}
                     inputStyle={{fontSize:14}}
                     placeholder="Cari .."
-                    value={this.state.searchText}
+                    value={this.state.query}
                 />
               </View>
-                {this.state.regionals.data.map((item, index) => {
+                {!this.state.loading && this.state.regionals.data.map((item, index) => {
                     return(
                         <TouchableOpacity onPress={()=>{
                             const {modalTitle, regionals} = this.state
@@ -703,9 +842,17 @@ export default class TambahPenduduk extends Component {
                                 residence.villageID = item.regionalID
                                 residence.village = item.name
                             }else if(modalTitle.indexOf('Dusun') >-1){
-                                residence.zoneID = item.regionalID
-                                residence.zone = item.name
+                                console.log(item.zoneID)
+                                residence.dusunID = item.zoneID
+                                residence.dusun = item.name
+                            }else if(modalTitle.indexOf('RW') >-1){
+                                residence.rwID = item.zoneID
+                                residence.rw = item.name
+                            }else if(modalTitle.indexOf('RT') >-1){
+                                residence.rtID = item.zoneID
+                                residence.rt = item.name
                             }
+
                             this.setState({ residence })
                             this.closeModal()
                         }} style={{ paddingHorizontal: 24, paddingVertical: 12 }}>
@@ -932,9 +1079,9 @@ export default class TambahPenduduk extends Component {
           this.modal.current.open();
         }
         if(e.indexOf('Provinsi')>-1){
-            this.fetchRegional(null, residence)
+            this.fetchRegional(null, residence, 'Provinsi')
         }else if(e.indexOf('Kota')>-1){
-            this.fetchRegional(this.state.regionals.provinceID, residence)
+            this.fetchRegional(this.state.regionals.provinceID, residence, 'Kota')
         }else if(e.indexOf('Pekerjaan')>-1){
             this.fetchJobs()
         }else if(e.indexOf('Negara')>-1){
@@ -945,6 +1092,12 @@ export default class TambahPenduduk extends Component {
             this.fetchSubdistrict()
         }else if(e.indexOf('Desa') >-1 ){
             this.fetchVillage()
+        }else if(e.indexOf('Dusun')>-1){
+            this.fetchZone(null)
+        }else if(e.indexOf('RW')){
+            this.fetchZone(this.state.residence.dusunID)
+        }else if(e.indexOf('RT')){
+            this.fetchZone(this.state.residence.rtID)
         }
       };
       
@@ -956,7 +1109,7 @@ export default class TambahPenduduk extends Component {
         ethnics.data = []
         residence.data = []
         console.log(residence)
-        this.setState({showHeader: true, regionals, jobs, countries, ethnics, residence})
+        this.setState({showHeader: true, regionals, jobs, countries, ethnics, residence, query: ''})
         console.log(this.state.modalTitle)
         if (this.modal.current) {
           this.modal.current.close();
@@ -980,7 +1133,31 @@ export default class TambahPenduduk extends Component {
         }
       };
 
-      handleSimpan = () => {
+      handleDelete = async () => {
+        Alert.alert(
+            'Hapus penduduk',
+            'Anda yakin ingin menghapus penduduk?',
+            [
+                {text: 'Yakin', onPress: this.hapusPenduduk},
+                {text: 'Batal'}
+            ]
+        )
+      }
+
+      hapusPenduduk = async () => {
+        console.log('delete',this.state.peopleID)
+        const response = await deletePeople(this.state.peopleID)
+        Alert.alert(
+            response.meta.code == 200?'Sukses':'Gagal',
+            response.meta.message
+        )
+        if(response.meta.code == 200){
+            this.props.navigation.state.params.refresh()
+            this.props.navigation.goBack(null)
+        }
+      }
+
+      handleSimpan = async () => {
         const{
             residence,
             regionals,
@@ -989,12 +1166,15 @@ export default class TambahPenduduk extends Component {
             blood,
             familyID,
             NIK,
+            KK,
             jobs,
             ethnics,
             countries,
             religion,
             disability,
             type,
+            officeID,
+            education,
             tanggalLahir: birthdate,
             jenisKelamin: gender
         } = this.state
@@ -1014,52 +1194,86 @@ export default class TambahPenduduk extends Component {
         const{
             ethnicID
         } = ethnics
-        const{
-            bloodID
-        } = blood
         var{
-            name: nationality
+            name: country
         } = countries
-        if(!nationality){
-            nationality='Indonesia'
+        if(!country){
+            country='Indonesia'
         }
         const body = {
-            familyID,
+            officeID,
+            familyID: null,
             provinceID,
             districtID,
             subdistrictID,
             villageID,
-            zoneID,
+            zoneID: residence.rtID,
             birthlocationID,
             jobID,
             ethnicID,
             NIK,
+            KK,
             name,
             religion,
             marital,
-            nationality,
-            gender,
-            disability,
-            type
+            country,
+            blood,
+            education,
+            gender: gender=='Laki-laki'?'L':'P',
+            disability: disability.indexOf('Tidak')>-1?null:disability,
+            type,
+            birthdate,
+            nationality: country=='Indonesia'?'WNI':'WNA'
         }
-        console.log(body)
+        let response 
+        if(this.state.peopleID){
+            body.peopleID = this.state.peopleID
+            response = await updatePeople(body)
+        }else{
+            response= await storePeoples(JSON.stringify(body))
+        }
+        if(response.meta.code == '200'){
+            Alert.alert(
+                'Sukses',
+                response.meta.message
+            )
+            this.props.navigation.state.params.refresh()
+            if(!this.state.peopleID){
+                this.props.navigation.goBack(null)
+            }
+        }else{
+            Alert.alert(
+                'Gagal!',
+                response.meta.message
+            )
+        }
       }
+
 
       onChangeCalendar = (event, selectedDate) => {
         const currentDate = selectedDate || this.state.date
-        const formatted = `${currentDate.getDate()} / ${currentDate.getMonth()+1} / ${currentDate.getFullYear()}`
+        const year = currentDate.getFullYear()
+        const month = (currentDate.getMonth()+1)<10?`0${currentDate.getMonth()}`:currentDate.getMonth()
+        const date = currentDate.getDate()<10?`0${currentDate.getDate()}`:currentDate.getDate()
+        const formatted = `${year}-${month}-${date}`
         this.setState({tanggalLahir: formatted, show: false})
       }
 
 
   render() {
     const {regionals, residence} = this.state
+    if(this.state.peopleLoading){
+        return(
+            <View/>
+        )
+    }
     return (
         
         <View style={{ flex: 1, flexDirection:"column"}}>
             <View style={{height: StatusBar.currentHeight, width: '100%',position:'absolute', backgroundColor: '#d5322e'}} />
             <View style={{height: 50, width: "100%", flexDirection: 'row', alignItems: 'center', marginTop:StatusBar.currentHeight }}>
-                <TouchableOpacity onPress={this.state.showHeader?() => this.props.navigation.goBack(): this.closeModal}>
+                <TouchableOpacity onPress={this.state.showHeader?() =>this.props.navigation.goBack()
+                    : this.closeModal}>
                     <Entypo name={'chevron-left'} color='#d5322e' size={24} style={{ paddingLeft: 10 }} />
                 </TouchableOpacity>
                 <Text style={{ paddingLeft: 10, fontSize: normalize(15), color: "#d5322e", fontWeight: '500' }}>{this.state.showHeader? this.state.action + ' Penduduk ' +this.state.baru:this.state.modalTitle}</Text>
@@ -1110,7 +1324,8 @@ export default class TambahPenduduk extends Component {
                 <View style={{width:"90%", marginTop: 10}}>
                     <View style={{flex:1, justifyContent: 'center'}}>
                         <TextField
-                            // value={username}
+                            value={this.state.KK}
+                            ref={ref=>this.kkref=ref}
                             label="Nomor Kartu Keluarga"
                             keyboardType='numeric'
                             textColor='grey'
@@ -1121,7 +1336,7 @@ export default class TambahPenduduk extends Component {
                             tintColor='#d5322e'
                             lineWidth={1}
                             contentInset={{label: 0, top:4, input:1}}
-                            onChangeText={(familyID) => this.setState({ familyID })} 
+                            onChangeText={(KK) => this.setState({ KK })} 
                             />
                         
                     </View>
@@ -1129,7 +1344,8 @@ export default class TambahPenduduk extends Component {
                 <View style={{width:"90%", marginTop: 10}}>
                     <View style={{flex:1, justifyContent: 'center'}}>
                         <TextField
-                            // value={username}
+                            value={this.state.NIK}
+                            ref={ref=>this.nikref=ref}
                             label="No. Kartu Tanda Penduduk"
                             keyboardType='numeric'
                             textColor='grey'
@@ -1149,7 +1365,8 @@ export default class TambahPenduduk extends Component {
                 <View style={{width:"90%"}}>
                     <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
                         <TextField
-                            // value={username}
+                            value={this.state.name}
+                            ref={ref=>this.nameref=ref}
                             label='Nama Lengkap'
                             keyboardType='default'
                             textColor='grey'
@@ -1227,7 +1444,7 @@ export default class TambahPenduduk extends Component {
                 
                 <View style={{width:"90%"}}>
                     <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
-                    <Text style={{position: 'absolute',top:-10, color:'grey',fontSize: normalize(12)}}>Tempat Tinggal Sesuai KK</Text>
+                    {/* <Text style={{position: 'absolute',top:-10, color:'grey',fontSize: normalize(12)}}>Tempat Tinggal Sesuai KK</Text>
                         <View style={{borderBottomWidth:1, borderColor:'grey'}}>
                             <RNPickerSelect 
                                 placeholder={{}}
@@ -1254,7 +1471,7 @@ export default class TambahPenduduk extends Component {
                                     {label: 'Tidak',value: 'Tidak'}
                                  ]}
                             />
-                        </View>
+                        </View> */}
                     </View>
                 </View>
 
@@ -1328,19 +1545,18 @@ export default class TambahPenduduk extends Component {
                         </View>
                     </View>
                     {/* Dusun */}
-                    <View style={{width:"100%"}}>
+                    {/* <View style={{width:"100%"}}>
                         <View style={{flex:1, justifyContent: 'center', marginBottom:10}}>
                             <TouchableOpacity onPress={()=>this.openModal('Pilih Dusun/Dukuh/Sebutan Lain', true)} style={{borderBottomWidth:1, borderColor:'grey', height:30}}>
-                                <Text style={{bottom:5,left:1, position: 'absolute', color:'grey', fontSize:normalize(14)}}>{residence.zone?residence.zone:'Dusun/Dukuh/Sebutan Lain'}</Text>   
+                                <Text style={{bottom:5,left:1, position: 'absolute', color:'grey', fontSize:normalize(14)}}>{residence.dusun?residence.dusun:'Dusun/Dukuh/Sebutan Lain'}</Text>   
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </View> */}
                             {/* RT / RW / KODE POS */}
                     <View style={{flex:1, alignItems: 'center', justifyContent:'space-between',flexDirection:'row',}}>
                     <View style={{width:'30%', padding:2, justifyContent: 'center',}}>
                         <TextField
-                            // value={rt}
-                            label='RT'
+                            label={residence.rt?residence.rt:'RT'}
                             keyboardType='numeric'
                             textColor='grey'
                             fontSize={normalize(14)}
@@ -1354,14 +1570,13 @@ export default class TambahPenduduk extends Component {
                             // onChangeText={ (username) => this.setState({ username })} 
                             />
 
-                        <TouchableOpacity onPress={()=>this.openModal('Pilih RT', true)} style={{flex:1, position: "absolute", right:0}}>
+                        {/* <TouchableOpacity onPress={()=>this.openModal('Pilih RT', true)} style={{flex:1, position: "absolute", right:0}}>
                             <FontAwesome name="search" size={16} color="grey" />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={{width:'30%', padding:2,justifyContent: 'center',}}>
                         <TextField
-                            // value={rw}
-                            label='RW'
+                            label={residence.rw?residence.rw:'RW'}
                             keyboardType='numeric'
                             textColor='grey'
                             fontSize={normalize(14)}
@@ -1373,16 +1588,14 @@ export default class TambahPenduduk extends Component {
                             containerStyle={{width:'100%', backgroundColor:'transparent'}}
                             inputContainerStyle={{width:'100%',}}
                             contentInset={{label: 0, top:4, input:1}}
-                            // onChangeText={ (username) => this.setState({ username })} 
                             />
 
-                        <TouchableOpacity onPress={()=>this.openModal('Pilih RW', true)} style={{flex:1, position: "absolute", right:0}}>
+                        {/* <TouchableOpacity onPress={()=>this.openModal('Pilih RW', true)} style={{flex:1, position: "absolute", right:0}}>
                             <FontAwesome name="search" size={16} color="grey" />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={{width:'30%', padding:2,justifyContent: 'center',}}>
                         <TextField
-                            // value={kodePos}
                             label='Kode Pos'
                             keyboardType='numeric'
                             textColor='grey'
@@ -1394,12 +1607,11 @@ export default class TambahPenduduk extends Component {
                             activeLineWidth={1.1}
                             containerStyle={{width:'100%',backgroundColor:'transparent'}}
                             contentInset={{label: 0, top:4, input:1}}
-                            // onChangeText={ (username) => this.setState({ username })} 
                             />
                             
-                        <TouchableOpacity onPress={()=>this.openModal('Pilih Kode Pos', true)} style={{flex:1, position: "absolute", right:0}}>
+                        {/* <TouchableOpacity onPress={()=>this.openModal('Pilih Kode Pos', true)} style={{flex:1, position: "absolute", right:0}}>
                             <FontAwesome name="search" size={16} color="grey" />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
                         {/* <View style={{width:"90%"}}> */}
@@ -1490,6 +1702,7 @@ export default class TambahPenduduk extends Component {
                                             {label: 'Laki-laki', value: 'Laki-laki'},
                                             {label: 'Perempuan',value: 'Perempuan'}
                                         ]}
+                                        value={this.state.jenisKelamin}
                                     />
                                     </View>
                                 </View>
@@ -1593,7 +1806,7 @@ export default class TambahPenduduk extends Component {
                     <View style={{width:"100%"}}>
                         <View style={{flex:1, justifyContent: 'center', marginBottom:15}}>
                             <TouchableOpacity onPress={()=>this.openModal2('Pilih Pendidikan')} style={{borderBottomWidth:1, borderColor:'grey', height:30}}>
-                                <Text style={{bottom:5,left:1, position: 'absolute', color:'grey', fontSize:normalize(12)}}>Pendidikan</Text>   
+                                <Text style={{bottom:5,left:1, position: 'absolute', color:'grey', fontSize:normalize(12)}}>{this.state.education?this.state.education:'Pendidikan'}</Text>   
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -1619,7 +1832,7 @@ export default class TambahPenduduk extends Component {
                         </TouchableOpacity> */}
                         
                     {this.state.action == "Tambah" ? null:
-                        <TouchableOpacity style={{height:wp('10%'), width:'55%', backgroundColor:'#d4322e', justifyContent: 'center', alignItems: 'center', borderRadius:5}}>
+                        <TouchableOpacity onPress={this.handleDelete} style={{height:wp('10%'), width:'55%', backgroundColor:'#d4322e', justifyContent: 'center', alignItems: 'center', borderRadius:5}}>
                             <Text style={{color:'white'}}>Hapus Penduduk</Text>
                         </TouchableOpacity>}
                     </View>

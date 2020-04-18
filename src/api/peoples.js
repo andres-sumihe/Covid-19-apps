@@ -1,3 +1,5 @@
+import { getOfficeID } from "./auth";
+
 const getPeoples = async () => {
     var requestOptions = {
         method: 'GET',
@@ -9,58 +11,51 @@ const getPeoples = async () => {
     return response
 }
 
-const storePeoples = async () => {
+const storePeoples = async (body) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Content-Type", "text/plain");
-
-    var raw = {
-        "officeID": "",
-        "familyID": "",
-        "provinceID": "",
-        "districtID": "",
-        "subdistrictID": "",
-        "villageID": "",
-        "zoneID": "",
-        "birthlocationID": "",
-        "jobID": "",
-        "ethnicID": "",
-        "NIK": "",
-        "Paspor": "",
-        "KITAP": "",
-        "NPWP": "",
-        "name": "",
-        "frontDegree": "",
-        "backDegree": "",
-        "birthdate": "",
-        "gender": "",
-        "religion": "",
-        "religionOther": "",
-        "marital": "",
-        "blood": "",
-        "education": "",
-        "disability": "",
-        "type": "",
-        "nationality": "",
-        "country": "",
-        "revenue": "",
-        "handphone": "",
-        "photo": ""
-    };
-
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+        redirect: 'follow',
+        body
     };
+    const request = await fetch("http://covid19.pantimarhaen.id:8001/peoples", requestOptions)
+    const response = await request.json()
+    return response
+}
 
-    fetch("http://covid19.pantimarhaen.id:8001/peoples", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+const updatePeople = async (body) => {
+    const officeID = await getOfficeID()
+    body.officeID = officeID
+    console.log(body)
+    const request = await fetch("http://covid19.pantimarhaen.id:8001/peoples", {
+        "method": "PUT",
+        "headers": {
+            "content-type": "application/json",
+        },
+        "body": JSON.stringify(body)
+    })
+    const response = await request.json()
+    return response
+}
+
+const deletePeople = async (peopleID) => {
+    const request = await fetch("http://covid19.pantimarhaen.id:8001/peoples", {
+        "method": "DELETE",
+        "headers": {
+            "content-type": "application/json",
+            "authorization": "Bearer "
+        },
+        "body": `{"peopleID": "${peopleID}"}`
+    })
+    const response = await request.json()
+    return response
 }
 
 export {
-    getPeoples
+    getPeoples,
+    storePeoples,
+    updatePeople,
+    deletePeople
 }

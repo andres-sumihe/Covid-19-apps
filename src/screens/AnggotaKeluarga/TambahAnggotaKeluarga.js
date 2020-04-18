@@ -12,7 +12,7 @@ import { Modalize } from 'react-native-modalize';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { normalize } from '../../components/ResponsiveFontSize';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { getPeoples } from '../../api/peoples';
+import { getPeoples, deletePeople } from '../../api/peoples';
 
 
 export default class TambahAnggotaKeluarga extends Component {
@@ -38,28 +38,6 @@ export default class TambahAnggotaKeluarga extends Component {
       mode: '',
       monitoringType: '',
       data: [
-        {
-          id: "1",
-          uri: require('../../../assets/images/ic2.png'),
-          name: "Satrio Umar",
-          familyID: "3209302307890007",
-          keanggotaan: "Suami"
-        },
-        {
-          id: "2",
-          uri: require('../../../assets/images/ic1.png'),
-          name: "Dewi Kinasi",
-          familyID: "3209302307890007",
-          keanggotaan: "Istri"
-        },
-        {
-          id: "3",
-          uri: require('../../../assets/images/ic3.png'),
-          name: "Maemunah",
-          familyID: "3209302307890007",
-          keanggotaan: "Anak"
-        },
-
       ],
       dataRadio: [
         {
@@ -134,6 +112,8 @@ export default class TambahAnggotaKeluarga extends Component {
   }
 
   assignPeople = async () => {
+    console.log('assignPeople')
+    this.setState({ data: [] })
     const people = await getPeoples()
     console.log(people.meta.message)
     this.setState({ data: people.data.rows })
@@ -371,7 +351,30 @@ export default class TambahAnggotaKeluarga extends Component {
 
   handleTambahPenduduk = () => {
     if (this.selectedRow != null) { this.selectedRow.closeRow(); }
-    this.props.navigation.navigate("TambahPenduduk", { action: "Tambah" })
+    this.props.navigation.navigate("TambahPenduduk", { action: "Tambah", refresh: this.assignPeople })
+  }
+
+  handleDelete = async (peopleID) => {
+    Alert.alert(
+      'Hapus penduduk',
+      'Anda yakin ingin menghapus penduduk?',
+      [
+        { text: 'Yakin', onPress: () => this.hapusPenduduk(peopleID) },
+        { text: 'Batal' }
+      ]
+    )
+  }
+
+  hapusPenduduk = async (peopleID) => {
+    console.log('delete', peopleID)
+    const response = await deletePeople(peopleID)
+    Alert.alert(
+      response.meta.code == 200 ? 'Sukses' : 'Gagal',
+      response.meta.message
+    )
+    if (response.meta.code == 200) {
+      this.assignPeople()
+    }
   }
 
   onChangeCalendar = (event, selectedDate) => {
@@ -459,23 +462,23 @@ export default class TambahAnggotaKeluarga extends Component {
                   this.selectedRow = this.rows[item.id]
                 }}
                 rightOpenValue={-100} style={styles.standalone} key={item.id} >
-
                 <View style={styles.standaloneRowBack}>
                   <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', width: 50, height: '100%', backgroundColor: '#ff9800' }}
-                    onPress={() => this.props.navigation.navigate("TambahPenduduk", { action: 'Edit', uri: JSON.stringify(item.uri) })}>
+                    onPress={() => this.props.navigation.navigate("TambahPenduduk", { action: 'Edit', uri: JSON.stringify(item.uri), people: item, refresh: this.assignPeople })}>
                     <FontAwesome name='pencil' size={24} color='white' />
                   </TouchableOpacity>
                   <TouchableOpacity
-                    // onPress={{}}
+                    onPress={()=>this.handleDelete(item.peopleID)}
                     style={{ alignItems: 'center', justifyContent: 'center', width: 50, height: '100%', }}>
                     <FontAwesome name='trash-o' size={24} color='white' />
                   </TouchableOpacity>
                 </View>
-                <TambahCard uri={item.uri} name={item.name} noKK={item.familyID} />
+                <TambahCard uri={item.uri} name={item.name} noKK={item.KK} />
               </SwipeRow>
                 :
                 <SwipeRow
                   ref={(c) => { this.rows[item.id] = c }}
+                  key={item}
                   onRowDidOpen={() => this.setState({ activeRow: item.id })}
                   onRowOpen={() => {
                     if (this.selectedRow && this.selectedRow !== this.rows[item.id]) { this.selectedRow.closeRow(); }
@@ -489,7 +492,7 @@ export default class TambahAnggotaKeluarga extends Component {
                       <FontAwesome name='trash-o' size={24} color='white' />
                     </TouchableOpacity>
                   </View>
-                  <TambahCard uri={item.uri} name={item.name} familyID={item.familyID} />
+                  <TambahCard uri={item.uri} name={item.name} familyID={item.KK} />
                 </SwipeRow>
             })
             }

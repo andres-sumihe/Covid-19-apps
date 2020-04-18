@@ -1,9 +1,44 @@
-const getRegionals = async (parentID) => {
+const getRegional = async (regionalID) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    
-    const body = parentID?`?body={
-            "query": "",
+    const body = `?body={
+            "search": {
+                "groupOp": "AND",
+                "rules": [
+                    {
+                        "field": "regionalID",
+                        "op": "eq",
+                        "data": "${regionalID}"
+                    }
+                ],
+                "groups": []
+            },
+            "page": 1,
+            "limit": 9999999999,
+            "sorts": [
+                {
+                    "field": "name",
+                    "mode": "ASC"
+                }
+            ]
+        }`
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    const request = await fetch("http://covid19.pantimarhaen.id:8001/regionals" + body, requestOptions)
+    const response = await request.json()
+    return response.data.rows[0]
+}
+
+const getRegionals = async (parentID, query) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    console.log(query)
+    const body = parentID ? `?body={
+            "query": "${query}",
             "search": {
                 "groupOp": "AND",
                 "rules": [
@@ -19,13 +54,13 @@ const getRegionals = async (parentID) => {
             "limit": 9999999999,
             "sorts": [
                 {
-                    "field": "regionalID",
+                    "field": "name",
                     "mode": "ASC"
                 }
             ]
         }`:
         `?body={
-            "query": "",
+            "query": "${query}",
             "search": {
                 "groupOp": "AND",
                 "rules": [
@@ -41,7 +76,7 @@ const getRegionals = async (parentID) => {
             "limit": 9999999999,
             "sorts": [
                 {
-                    "field": "regionalID",
+                    "field": "name",
                     "mode": "ASC"
                 }
             ]
@@ -59,5 +94,6 @@ const getRegionals = async (parentID) => {
 }
 
 export {
-    getRegionals
+    getRegionals,
+    getRegional
 }
