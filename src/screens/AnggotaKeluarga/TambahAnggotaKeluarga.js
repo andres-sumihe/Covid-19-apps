@@ -125,7 +125,6 @@ export default class TambahAnggotaKeluarga extends Component {
   modal = React.createRef();
   modal2 = React.createRef();
   renderQR = () => {
-<<<<<<< HEAD
     return(
       <View style={[styles.content, {height:hp('20%'), justifyContent:'center',}]}>
       <View style={{
@@ -174,59 +173,6 @@ export default class TambahAnggotaKeluarga extends Component {
           </TouchableOpacity>
           <TouchableOpacity 
               onPress={()=>this.handlePositifButton("PDP",'#ff9800')}
-=======
-    return (
-      <View style={[styles.content, { height: hp('25%') }]}>
-        <View style={{
-          paddingHorizontal: 30,
-          paddingVertical: 5,
-          borderBottomRightRadius: 5,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#d5322e',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: 100
-        }}>
-          <Text style={{ color: "white" }}>Pilih Jenis Monitoring Warga</Text>
-        </View>
-        <View style={{ height: 50 }}></View>
-        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', }}>
-          <View style={{ width: wp('80%'), justifyContent: 'space-between', flexDirection: 'row' }}>
-            <TouchableOpacity
-              onPress={() => this.openModal("Keluar Desa")}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical: 7,
-                borderRadius: 5,
-                // paddingHorizontal:20, 
-                backgroundColor: '#4caf50',
-                width: wp('18%'),
-                height: wp('18%')
-              }}>
-              <Text style={{ color: 'white', fontSize: normalize(13) }}>Keluar</Text>
-              <Text style={{ color: 'white', fontSize: normalize(13) }}>Desa</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.openModal("Masuk Desa")}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical: 7,
-                borderRadius: 5,
-                // paddingHorizontal:20, 
-                backgroundColor: '#0288d1',
-                width: wp('18%'),
-                height: wp('18%')
-              }}>
-              <Text style={{ color: 'white', fontSize: normalize(13) }}>Masuk</Text>
-              <Text style={{ color: 'white', fontSize: normalize(13) }}>Desa</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.handlePositifButton}
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -238,13 +184,8 @@ export default class TambahAnggotaKeluarga extends Component {
               }}>
               <Text style={{ color: 'white', fontSize: normalize(14) }}>PDP</Text>
             </TouchableOpacity>
-<<<<<<< HEAD
             <TouchableOpacity 
               onPress={()=>this.handlePositifButton("Positif",'#d5322e')}
-=======
-            <TouchableOpacity
-              onPress={this.handlePositifButton}
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -376,13 +317,8 @@ export default class TambahAnggotaKeluarga extends Component {
       this.modal.current.open();
     }
   };
-<<<<<<< HEAD
-  handlePositifButton = (title,color) => {
-    this.setState({confirm: true, titlePopup: title, colorPopup: color})
-=======
   handlePositifButton = () => {
     this.setState({ confirm: true })
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
   }
   handleInOutButton = () => {
     this.props.navigation.navigate("AnggotaKeluarga")
@@ -452,7 +388,6 @@ export default class TambahAnggotaKeluarga extends Component {
       return (
         <KeyboardAvoidingView enabled behavior="padding" style={styles.popupContainer}>
           <View style={styles.infoContainer}>
-<<<<<<< HEAD
             <View style={{
                 paddingHorizontal:15, 
                 paddingVertical:3, 
@@ -470,10 +405,6 @@ export default class TambahAnggotaKeluarga extends Component {
           </View>
               <Text style={{fontWeight:'700', fontSize: normalize(20), marginTop:10}}>{this.state.nameOnEdit}</Text>
               <Text style={{fontSize: normalize(16), marginBottom:10}}>{this.state.kkOnEdit}</Text>
-=======
-            <Text style={{ fontSize: normalize(16), marginTop: 10 }}>{this.state.kkOnEdit}</Text>
-            <Text style={{ fontWeight: '700', fontSize: normalize(20), marginBottom: 10 }}>{this.state.nameOnEdit}</Text>
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
 
             <TextField
               // value={rt}
@@ -499,21 +430,12 @@ export default class TambahAnggotaKeluarga extends Component {
             {/* <Text style={{fontSize: normalize(15)}}>{this.state.selectedPosition}</Text> */}
           </View>
           <View style={styles.buttonContainer}>
-<<<<<<< HEAD
               <TouchableOpacity style={styles.batalButton} onPress={()=> this.setState({confirm: false})}>
                     <Text >Batal</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.hapusButton, {backgroundColor:this.state.colorPopup}]}>
                     <Text style={{color:'white'}}>Tetapkan</Text>
               </TouchableOpacity>
-=======
-            <TouchableOpacity style={styles.batalButton} onPress={() => this.setState({ confirm: false })}>
-              <Text >Batal</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.hapusButton}>
-              <Text style={{ color: 'white' }}>Tetapkan</Text>
-            </TouchableOpacity>
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
           </View>
         </KeyboardAvoidingView>
       )
@@ -555,15 +477,9 @@ export default class TambahAnggotaKeluarga extends Component {
                 }}
                 rightOpenValue={-100} style={styles.standalone} key={item.id} >
                 <View style={styles.standaloneRowBack}>
-<<<<<<< HEAD
                   <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', width:50, height:'100%', backgroundColor:'#4caf50'}}
                       onPress={()=> this.props.navigation.navigate("TambahPenduduk", {action:'Edit', uri: JSON.stringify(item.uri)})}>
                         <FontAwesome name='pencil' size={24} color='white' />
-=======
-                  <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', width: 50, height: '100%', backgroundColor: '#ff9800' }}
-                    onPress={() => this.props.navigation.navigate("TambahPenduduk", { action: 'Edit', uri: JSON.stringify(item.uri), people: item, refresh: this.assignPeople })}>
-                    <FontAwesome name='pencil' size={24} color='white' />
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={()=>this.handleDelete(item.peopleID)}
@@ -596,15 +512,9 @@ export default class TambahAnggotaKeluarga extends Component {
             }
 
           </ScrollView>
-<<<<<<< HEAD
           {this.state.showButton?<View style={{ bottom:10, right:10,position: 'absolute', flexDirection:"row", alignItems: 'center',}}>
             <Surface style={{right:-10,height:30, width:120, paddingRight:10, paddingLeft:10, justifyContent: 'center', alignItems: 'center', backgroundColor:'orange', borderTopStartRadius:10, borderBottomStartRadius:10}}>
               <Text style={{fontSize:10, color:'white'}}>Tambah KTP Baru</Text>
-=======
-          {this.state.showButton ? <View style={{ bottom: 10, right: 10, position: 'absolute', flexDirection: "row", alignItems: 'center', }}>
-            <Surface style={{ right: -10, height: 30, width: 100, paddingRight: 10, paddingLeft: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'orange', borderTopStartRadius: 10, borderBottomStartRadius: 10 }}>
-              <Text style={{ fontSize: 10, color: 'white' }}>Tambah KTP Baru</Text>
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
             </Surface>
             <Surface style={{ elevation: 0, width: 60, height: 60, justifyContent: 'center', alignItems: 'center', borderRadius: 30, backgroundColor: '#0288d1' }}>
               <TouchableOpacity onPress={this.handleTambahPenduduk}>
@@ -614,7 +524,6 @@ export default class TambahAnggotaKeluarga extends Component {
           </View> : null}
         </View>
 
-<<<<<<< HEAD
           {this.state.confirm ? <Confirm />:null}
 
           <Modalize ref={this.modal2} handleStyle={{display:"none"}} 
@@ -649,42 +558,6 @@ export default class TambahAnggotaKeluarga extends Component {
                 onChange={this.onChangeCalendar}
                 onClose={()=>this.setState({showCalendar: false})}
             />}
-=======
-        {this.state.confirm ? <Confirm /> : null}
-
-        <Modalize ref={this.modal2} handleStyle={{ display: "none" }}
-          adjustToContentHeight
-          // avoidKeyboardLikeIOS
-          // keyboardAvoidingBehavior="padding"
-          // keyboardAvoidingOffset={50}
-          key={this.state.modal2Key}
-          onClosed={() => this.setState({ showHeader: true, modal2Key: new Date().getTime() })}>
-          {this.renderQR()}
-        </Modalize>
-        <Modalize ref={this.modal} adjustToContentHeight
-          avoidKeyboardLikeIOS
-          keyboardAvoidingBehavior="padding"
-          keyboardAvoidingOffset={20}
-          handleStyle={{ display: "none" }}
-          onClose={() => this.setState({ show: !this.state.show })}
-          onOpen={this.closeModal2}>
-
-          {this.renderContentMobilitas()}
-
-        </Modalize>
-
-        {this.state.showCalendar &&
-          <RNDateTimePicker
-            onBlur={() => this.setState({ showCalendar: false })}
-            value={this.state.date}
-            mode={this.state.mode}
-            minimumDate={new Date()}
-            is24Hour={true}
-            display="calendar"
-            onChange={this.onChangeCalendar}
-            onClose={() => this.setState({ showCalendar: false })}
-          />}
->>>>>>> d0a7466bf6e6cab6a8023a7d6a4bd311a5ccf19d
       </View>
     )
   }
