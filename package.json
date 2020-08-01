@@ -14,6 +14,7 @@
     "expo": "~36.0.0",
     "expo-barcode-scanner": "^8.0.0",
     "expo-camera": "^8.0.0",
+    "expo-cli": "^3.23.1",
     "expo-font": "~8.0.0",
     "expo-image-picker": "^8.0.2",
     "expo-location": "~8.0.0",

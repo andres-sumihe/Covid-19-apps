@@ -113,7 +113,7 @@ export default class AnggotaKeluarga extends Component {
         },
         {
           id:8,
-            label: 'Keluar ruah menggunakan masker',
+            label: 'Keluar rumah menggunakan masker',
             color: '#d5322e',
             size: 16,
             ya: false,
@@ -137,7 +137,7 @@ export default class AnggotaKeluarga extends Component {
         },
         {
           id:11,
-            label: 'Berjabat tangan dengan orang lain',
+            label: 'Pernah pergi atau tinggal di luar negeri',
             color: '#d5322e',
             size: 16,
             ya: false,
@@ -145,7 +145,7 @@ export default class AnggotaKeluarga extends Component {
         },
         {
           id:12,
-            label: 'Cuci tangan pakai sabun',
+            label: 'Pernah pergi atau tinggal di daerah terinfeksi',
             color: '#d5322e',
             size: 16,
             ya: false,
@@ -291,7 +291,7 @@ export default class AnggotaKeluarga extends Component {
               height: hp('1%'),
             }} />
         </View>
-        <ScrollView scrollEnabled style={{width:'100%'}} contentContainerStyle={{alignItems: 'center'}}>
+        <ScrollView scrollEnabled style={{width:'100%', height:'100%'}} contentContainerStyle={{alignItems: 'center'}}>
           <View style={{paddingHorizontal:20,paddingVertical:10, backgroundColor:'grey', width:'100%' }}>
             <Text style={{color: 'white'}}>Gejala Yang Dirasakan</Text>
           </View>
@@ -359,14 +359,12 @@ export default class AnggotaKeluarga extends Component {
               )} 
               })}
         </ScrollView>
-        {this.state.show?
+
           <View style={{position: 'absolute',bottom:0, width:"100%",height:40, justifyContent:'center', alignItems: 'center',position: 'absolute',bottom:0, backgroundColor:'#d5322e'}}>
             <TouchableOpacity >
                 <Text style={{fontSize: normalize(13), fontWeight: "700", color:'white' }}>Simpan</Text>
             </TouchableOpacity>
           </View>
-          :null}
-           
       </View>
     )
   }

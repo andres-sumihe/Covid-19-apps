@@ -1269,24 +1269,24 @@ export default class TambahPenduduk extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{width:"100%", alignItems: 'center',marginBottom:30}}>
+                    {/* <View style={{width:"100%", alignItems: 'center',marginBottom:30}}>
                         <View style={styles.conteinerPhoto}>
                             <View style={styles.photo}>
                                 <Image source={this.state.uri} style={{width:'100%', height: '100%'}} resizeMode="cover"/>
                             </View>
                         </View>
-                        {/* <TouchableOpacity 
+                        <TouchableOpacity 
                             onPress={()=>this.props.navigation.navigate("CameraApp")}
                             style={styles.buttonPhoto} 
                             activeOpacity={0.5}>
                             <Text style={{fontSize:normalize(14)}}>{this.state.titleButtonPhoto}</Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity> 
                         
                     {this.state.action == "Tambah" ? null:
                         <TouchableOpacity style={{height:wp('10%'), width:'55%', backgroundColor:'#d4322e', justifyContent: 'center', alignItems: 'center', borderRadius:5}}>
                             <Text style={{color:'white'}}>Hapus Penduduk</Text>
                         </TouchableOpacity>}
-                    </View>
+                    </View> */}
                 </View>
 
             </ScrollView>

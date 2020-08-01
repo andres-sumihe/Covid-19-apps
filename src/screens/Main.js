@@ -370,9 +370,9 @@ export default class Main extends Component {
             </View>
     
             {this.state.mode  == 'admin' ? <View style={styles.search}>
-                <TouchableOpacity style={{flex:1}}>
-                    <FontAwesome name="search" size={20} color="grey" />
-                </TouchableOpacity>
+                <View style={{flex:1}}>
+                    <FontAwesome name="search" size={16} color="grey" />
+                </View>
                 <View style={{flex:9, justifyContent: 'center', paddingRight:4}}>
                     <TouchableOpacity style={{justifyContent:'center'}}
                         activeOpacity={1}
@@ -410,22 +410,22 @@ export default class Main extends Component {
                 <ScrollView style={{width:'100%', }} contentContainerStyle={{justifyContent:'center', alignItems:'center'}} showsVerticalScrollIndicator={false}>
                 <View style={{backgroundColor:'red', marginTop:50}}>
                         <LinearGradient
-                            colors={['white','white', 'transparent', 'transparent']}
+                            colors={['white','white', 'transparent', 'transparent','transparent','transparent','transparent',]}
                             style={{ width: '100%', height: '50%', position: 'absolute', top: 0 }}
                         />
                         <LinearGradient
-                            colors={['transparent', 'transparent','white', 'white']}
+                            colors={['transparent', 'transparent','transparent','transparent','transparent','white', 'white']}
                             style={{ width: '100%', height: '50%', position: 'absolute', bottom: 0 }}
                         />
                         <LinearGradient
                             start={[0, 0]}
                             end={[1, 0]}
-                            colors={['white','white', 'transparent','transparent', 'transparent']}
+                            colors={['white','white','transparent', 'transparent','transparent','transparent', 'transparent']}
                             style={{ width: '50%', height: '100%', position: 'absolute', left: 0}}
                         />
                         <LinearGradient
                             start={[0, 0]} end={[1, 0]}
-                            colors={['transparent', 'transparent', 'transparent','white', 'white']}
+                            colors={['transparent', 'transparent','transparent','transparent', 'transparent','white', 'white']}
                             style={{ width: '50%', height: '100%', position: 'absolute', right: 0 }}
                         />
 
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         width:'200%',
         // height:hp('56%'),
-        height:normalize(315),
+        height:hp('56%'),
         top:-hp('19%'),
         zIndex:-1000,
         borderBottomLeftRadius:1000,
@@ -675,7 +675,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12,
         fontWeight:'100',
-        marginTop:-8
+        marginTop:-4
     },
     popupContainer: {
         position:'absolute',
